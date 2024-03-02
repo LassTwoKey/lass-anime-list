@@ -4,7 +4,7 @@ import { Main } from "@/pages/Main";
 import { Anime } from "@/pages/Anime";
 import { Manga } from "@/pages/Manga";
 import { AnimeDetails } from "@/pages/AnimeDetails";
-
+import { MangaDetails } from "@/pages/MangaDetails";
 
 export const router = createBrowserRouter([
   {
@@ -22,5 +22,9 @@ export const router = createBrowserRouter([
   {
     path: "/manga",
     element: <Manga />
+  },
+  {
+    path: "/manga/:mangaId",
+    element: <MangaDetails />
   },
 ]);
