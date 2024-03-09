@@ -1,38 +1,76 @@
-import { gql, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { gql, useQuery } from '@apollo/client'
+import { useParams } from 'react-router-dom'
 
-import { PageWrapper } from "@/ui/PageWrapper";
+import { PageWrapper } from '@/ui/PageWrapper'
+import { MediaDetails } from '@/components/MediaDetails/MediaDetails'
 
-const GET_ANIME = gql`
-  query GetAnime($id: Int){
-    Media(id: $id, type: MANGA) {
-      bannerImage
+const GET_MANGA = gql`
+    query GetManga($id: Int) {
+        Media(id: $id, type: MANGA) {
+            id
+            title {
+                romaji
+                native
+            }
+            coverImage {
+                large
+            }
+            bannerImage
+            meanScore
+            type
+            genres
+            format
+            description
+            status
+            source
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            characters {
+                edges {
+                    node {
+                        name {
+                            userPreferred
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
-`;
+`
 
 export const MangaDetails = () => {
-  let {mangaId} = useParams();  
+    const { mediaId } = useParams()
 
-  const { loading, error, data } = useQuery(GET_ANIME, {
-    variables: {
-      id: mangaId,
-    },
-  });
+    const { loading, error, data } = useQuery(GET_MANGA, {
+        variables: {
+            id: mediaId,
+        },
+    })
 
-  if (loading) return (
-    <PageWrapper>
-      <div>Loading...</div>
-    </PageWrapper>
-  );
-  if (error) return ( <PageWrapper>
-      <div>Error in loading data :(</div>
-    </PageWrapper>
-  )
-  
-  return (
-    <PageWrapper>
-      <img src={data.Media.bannerImage} alt="" />
-    </PageWrapper>
-  )
+    if (loading)
+        return (
+            <PageWrapper>
+                <div>Loading...</div>
+            </PageWrapper>
+        )
+    if (error)
+        return (
+            <PageWrapper>
+                <div>Error in loading data :(</div>
+            </PageWrapper>
+        )
+
+    return (
+        <PageWrapper>
+            <MediaDetails mediaDetails={data.Media} />
+        </PageWrapper>
+    )
 }

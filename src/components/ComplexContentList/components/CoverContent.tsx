@@ -3,13 +3,15 @@ import { gql, useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
 import { ChartItem } from '@/types'
-import { capitalizeFirstLetter, getFormattedDate, getStringSeparatedByCommas, maxLength } from '@/utils'
-import errorImg from '@/assets/images/error.png'
+import {
+    capitalizeFirstLetter,
+    getFormattedDate,
+    getStringSeparatedByCommas,
+    maxLength,
+} from '@/utils'
 
 const GET_ANIME_INFO = gql`
-    query GetItemInfo(
-        $id: Int
-    ) {
+    query GetItemInfo($id: Int) {
         Media(id: $id) {
             episodes
             duration
@@ -29,9 +31,7 @@ const GET_ANIME_INFO = gql`
     }
 `
 const GET_MANGA_INFO = gql`
-    query GetItemInfo(
-        $id: Int
-    ) {
+    query GetItemInfo($id: Int) {
         Media(id: $id) {
             status
             source
@@ -54,7 +54,7 @@ interface CoverContentProps {
 }
 
 export const CoverContent: FC<CoverContentProps> = (props) => {
-    const { item } = props 
+    const { item } = props
 
     const {
         loading: loadingAnime,
@@ -79,49 +79,54 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
     const [isShowText, setIsShowText] = useState(false)
 
     if (loadingAnime || loadingManga) {
-        return <div className='flex justify-center min-h-14 py-4'><span className="loader-1"></span></div>
+        return (
+            <div className="flex justify-center min-h-14 py-4">
+                <span className="loader-1"></span>
+            </div>
+        )
     }
 
     if (errorAnime || errorManga) {
-        return <div className='text-red-500 font-medium flex justify-center max-h-24 py-4'>
-            <p className='text-lg'>Error in loading</p>
-        </div>
+        return (
+            <div className="text-red-500 font-medium flex justify-center max-h-24 py-4">
+                <p className="text-lg">Error in loading</p>
+            </div>
+        )
     }
 
     let itemInfo = null
-    
+
     if (item.type === 'ANIME') {
         itemInfo = {
-            'Type': capitalizeFirstLetter(item.type),
+            Type: capitalizeFirstLetter(item.type),
             'Start Date': getFormattedDate(dataAnime.Media.startDate),
             'End Date': getFormattedDate(dataAnime.Media.endDate),
-            'Genres': getStringSeparatedByCommas(item.genres),
-            'Source': dataAnime.Media.source,
-            'Episodes': dataAnime.Media.episodes,
-            'Status': capitalizeFirstLetter(dataAnime.Media.status),
-            'Duration': `${dataAnime.Media.duration} mins`,
+            Genres: getStringSeparatedByCommas(item.genres),
+            Source: capitalizeFirstLetter(dataAnime.Media.source),
+            Episodes: dataAnime.Media.episodes,
+            Status: capitalizeFirstLetter(dataAnime.Media.status),
+            Duration: `${dataAnime.Media.duration} mins`,
         }
     } else {
         itemInfo = {
-            'Type': capitalizeFirstLetter(item.type),
+            Type: capitalizeFirstLetter(item.type),
             'Start Date': getFormattedDate(dataManga.Media.startDate),
             'End Date': getFormattedDate(dataManga.Media.endDate),
-            'Genres': getStringSeparatedByCommas(item.genres),
-            'Status': capitalizeFirstLetter(dataManga.Media.status),
+            Genres: getStringSeparatedByCommas(item.genres),
+            Status: capitalizeFirstLetter(dataManga.Media.status),
         }
     }
 
-    let itemInfoList = [];
+    const itemInfoList = []
 
     for (const key in itemInfo) {
         if (Object.prototype.hasOwnProperty.call(itemInfo, key)) {
             if (itemInfo[key]) {
                 itemInfoList.push([key, itemInfo[key]])
             }
-            
         }
     }
-    
+
     return (
         <div className="divide-y divide-neutral-700">
             <div className="pb-4">
@@ -146,14 +151,14 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
                 <div className="flex justify-center mt-4">
                     <Button
                         variant={'secondary'}
-                        onClick={() => setIsShowText(prev => !prev)}
+                        onClick={() => setIsShowText((prev) => !prev)}
                     >
                         {isShowText ? 'Hide' : 'Read more'}
                     </Button>
                 </div>
-                <div className='mt-4 flex flex-col gap-1'>
-                    {itemInfoList.map(infoItem => (
-                        <div key={infoItem[0]} className='grid grid-cols-2'>
+                <div className="mt-4 flex flex-col gap-1">
+                    {itemInfoList.map((infoItem) => (
+                        <div key={infoItem[0]} className="grid grid-cols-2">
                             <div>{infoItem[0]}</div>
                             <div>{infoItem[1]}</div>
                         </div>

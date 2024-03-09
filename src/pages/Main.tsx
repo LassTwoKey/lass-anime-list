@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { PageWrapper } from '@/ui/PageWrapper'
 import { CurrentSeasonList } from '@/components/CurrentSeasonList'
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
+import { capitalizeFirstLetter, getCurrentSeason } from '@/utils'
 
 const GET_CURRENT_SEASON_LIST = gql`
     query CurrentSeasonList($page: Int, $perPage: Int, $seasonYear: Int) {
@@ -51,6 +52,7 @@ const GET_MEDIA_LIST = gql`
 `
 
 export const Main = () => {
+    const currentSeason = getCurrentSeason()
     const {
         loading: currentListLoading,
         error: currentListError,
@@ -59,7 +61,7 @@ export const Main = () => {
         variables: {
             page: 1,
             perPage: 10,
-            seasonYear: 2024,
+            seasonYear: currentSeason.year,
         },
     })
 
@@ -121,7 +123,7 @@ export const Main = () => {
             <div className="py-8">
                 <div className="container mx-auto px-4">
                     <h2 className="font-medium text-3xl text-white mb-6">
-                        Winter Season{' '}
+                        {capitalizeFirstLetter(currentSeason.currentSeason)}{' '}
                         <span className="text-red-500">Anime</span>
                     </h2>
                     <CurrentSeasonList list={currentListData.Page.media} />
