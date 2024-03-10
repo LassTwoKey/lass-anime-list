@@ -5,6 +5,7 @@ import notFoundImage from '@/assets/images/not-found.png'
 import { Overview } from './components/Overview'
 import { Characters } from './components/Characters'
 import { Stuff } from './components/Stuff'
+import { Stats } from './components/Stats'
 
 interface MediaDetailsProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
@@ -13,8 +14,16 @@ interface MediaDetailsProps {
 export const MediaDetails: FC<MediaDetailsProps> = (props) => {
     const { mediaDetails } = props
 
+    const description = (
+        <p
+            dangerouslySetInnerHTML={{
+                __html: mediaDetails.description,
+            }}
+        ></p>
+    )
+
     return (
-        <div className="text-gray-400">
+        <div className="text-gray-400 text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full">
                 <img
                     className="absolute left-0 top-0 w-full h-full object-cover"
@@ -23,32 +32,28 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
                 />
             </div>
             <div className="bg-neutral-900">
-                <div className="container mx-auto flex px-4">
-                    <div
-                        className="-translate-y-1/3 shrink-0"
-                        style={{ width: 210 }}
-                    >
+                <div className="container mx-auto flex px-4 -mb-4 lg:mb-0">
+                    <div className="-translate-y-12 lg:-translate-y-28 shrink-0 w-24 lg:w-56">
                         <img
                             src={mediaDetails.coverImage.large}
-                            className="max-h-72 rounded-lg overflow-hidden"
+                            className="max-h-32 lg:max-h-72 rounded-lg overflow-hidden"
                             alt=""
                         />
                     </div>
-                    <div className="p-5">
-                        <h1 className="text-2xl font-medium mb-3 text-white">
+                    <div className="py-4 pl-2 lg:pl-2 lg:py-5">
+                        <h1 className="text-lg lg:text-2xl font-medium mb-3 text-white">
                             {mediaDetails.title.romaji}
                         </h1>
                         <h2 className="mb-3">{mediaDetails.title.native}</h2>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: mediaDetails.description,
-                            }}
-                        ></p>
+                        <div className="hidden lg:block">{description}</div>
                     </div>
+                </div>
+                <div className="container mx-auto pb-4 px-4 block lg:hidden">
+                    {description}
                 </div>
             </div>
             <div className="container mx-auto flex px-4 pb-8 gap-4">
-                <div className="shrink-0" style={{ width: 210 }}></div>
+                <div className="shrink-0 hidden lg:block w-56"></div>
                 <Tabs defaultValue="overview" className="w-full">
                     <TabsList>
                         <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -66,7 +71,7 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
                         <Stuff type={mediaDetails.type} />
                     </TabsContent>
                     <TabsContent value="stats">
-                        Стату не сделал, но обязан блэт!
+                        <Stats />
                     </TabsContent>
                 </Tabs>
             </div>

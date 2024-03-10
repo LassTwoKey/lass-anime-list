@@ -4,6 +4,7 @@ import { PageWrapper } from '@/ui/PageWrapper'
 import { CurrentSeasonList } from '@/components/CurrentSeasonList'
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { capitalizeFirstLetter, getCurrentSeason } from '@/utils'
+import { ErrorBlock } from '@/components/ui/ErrorBlock'
 
 const GET_CURRENT_SEASON_LIST = gql`
     query CurrentSeasonList($page: Int, $perPage: Int, $seasonYear: Int) {
@@ -91,16 +92,21 @@ export const Main = () => {
         },
     })
 
-    if (currentListLoading || animeListLoading || mangaListLoading)
+    if (currentListLoading || animeListLoading || mangaListLoading) {
         return (
             <PageWrapper>
-                <div>Loading...</div>
+                <div className="h-full flex justify-center items-center">
+                    <span className="loader-1"></span>
+                </div>
             </PageWrapper>
         )
+    }
     if (currentListError || animeListError || mangaListError)
         return (
             <PageWrapper>
-                <div>Error in loading data :(</div>
+                <div className="h-full flex justify-center items-center text-red-500">
+                    <ErrorBlock />
+                </div>
             </PageWrapper>
         )
 
@@ -122,7 +128,7 @@ export const Main = () => {
 
             <div className="py-8">
                 <div className="container mx-auto px-4">
-                    <h2 className="font-medium text-3xl text-white mb-6">
+                    <h2 className="font-medium text-xl lg:text-3xl text-white mb-6">
                         {capitalizeFirstLetter(currentSeason.currentSeason)}{' '}
                         <span className="text-red-500">Anime</span>
                     </h2>
@@ -134,7 +140,7 @@ export const Main = () => {
                 <div className="container mx-auto px-4">
                     <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
                         <div>
-                            <h2 className="font-medium text-3xl text-white mb-6">
+                            <h2 className="font-medium text-xl lg:text-3xl text-white mb-6">
                                 Trending{' '}
                                 <span className="text-red-500">Anime</span>
                             </h2>
@@ -144,7 +150,7 @@ export const Main = () => {
                             />
                         </div>
                         <div>
-                            <h2 className="font-medium text-3xl text-white mb-6">
+                            <h2 className="font-medium text-xl lg:text-3xl text-white mb-6">
                                 Trending{' '}
                                 <span className="text-blue-500">Manga</span>
                             </h2>

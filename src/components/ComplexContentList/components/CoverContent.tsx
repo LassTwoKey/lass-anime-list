@@ -128,7 +128,7 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
     }
 
     return (
-        <div className="divide-y divide-neutral-700">
+        <div className="divide-y divide-neutral-700 text-sm lg:text-base">
             <div className="pb-4">
                 <h3 className="text-green-500 text-xl">{item.title.romaji}</h3>
                 <p className="text-gray-400">{item.title.native}</p>

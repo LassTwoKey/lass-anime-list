@@ -52,7 +52,7 @@ export const Stuff: FC<StuffProps> = (props) => {
     const stuffList: StuffEdge[] = data.Media.staff.edges
 
     return (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {stuffList.map((employee) => (
                 <div
                     key={employee.id}
