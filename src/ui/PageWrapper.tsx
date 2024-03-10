@@ -11,7 +11,7 @@ export const PageWrapper: FC<PageWrapperProps> = (props) => {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main className="bg-zinc-800">{children}</main>
         </>
     )
 }
