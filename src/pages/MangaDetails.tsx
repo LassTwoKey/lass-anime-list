@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { PageWrapper } from '@/ui/PageWrapper'
 import { MediaDetails } from '@/components/MediaDetails/MediaDetails'
-import { ErrorBlock } from '@/components/ui/ErrorBlock'
+import { ErrorBlock } from '@/ui/ErrorBlock'
 
 const GET_MANGA = gql`
     query GetManga($id: Int) {

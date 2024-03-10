@@ -4,7 +4,7 @@ import { PageWrapper } from '@/ui/PageWrapper'
 import { CurrentSeasonList } from '@/components/CurrentSeasonList'
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { capitalizeFirstLetter, getCurrentSeason } from '@/utils'
-import { ErrorBlock } from '@/components/ui/ErrorBlock'
+import { ErrorBlock } from '@/ui/ErrorBlock'
 
 const GET_CURRENT_SEASON_LIST = gql`
     query CurrentSeasonList($page: Int, $perPage: Int, $seasonYear: Int) {
