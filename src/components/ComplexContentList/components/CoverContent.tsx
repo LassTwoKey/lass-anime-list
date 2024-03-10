@@ -121,8 +121,8 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
 
     for (const key in itemInfo) {
         if (Object.prototype.hasOwnProperty.call(itemInfo, key)) {
-            if (itemInfo[key]) {
-                itemInfoList.push([key, itemInfo[key]])
+            if (itemInfo[key as keyof typeof itemInfo]) {
+                itemInfoList.push([key, itemInfo[key as keyof typeof itemInfo]])
             }
         }
     }

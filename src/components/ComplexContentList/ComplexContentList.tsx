@@ -10,9 +10,9 @@ interface ComplexContentListProps {
 export const ComplexContentList: FC<ComplexContentListProps> = (props) => {
     const { list, type } = props
 
-    const isCover = type === 'cover'
+    // const isCover = type === 'cover'
     const isChart = type === 'chart'
-    const isTable = type === 'table'
+    // const isTable = type === 'table'
 
     return <>{isChart && <ChartItemsList list={list} />}</>
 }

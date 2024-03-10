@@ -12,14 +12,10 @@ interface OverviewProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
 }
 
-type MediaInfo = {
-    [key: string]: unknown
-}
-
 export const Overview: FC<OverviewProps> = (props) => {
     const { mediaDetails } = props
 
-    let mediaInfo: MediaInfo = {}
+    let mediaInfo = null
 
     if (mediaDetails.type === 'ANIME') {
         const animeDetails = mediaDetails as MediaAnimeDetails
@@ -51,12 +47,15 @@ export const Overview: FC<OverviewProps> = (props) => {
         }
     }
 
-    const itemInfoList: [string, string | number][] = []
+    const itemInfoList = []
 
     for (const key in mediaInfo) {
         if (Object.prototype.hasOwnProperty.call(mediaInfo, key)) {
-            if (mediaInfo[key]) {
-                itemInfoList.push([key, mediaInfo[key]])
+            if (mediaInfo[key as keyof typeof mediaInfo]) {
+                itemInfoList.push([
+                    key,
+                    mediaInfo[key as keyof typeof mediaInfo],
+                ])
             }
         }
     }
