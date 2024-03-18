@@ -97,7 +97,7 @@ export const Header = () => {
     return (
         <header className="fixed w-full h-12 inset-0 flex items-center z-50  before:block before:absolute before:inset-0 before:bg-neutral-900 before:opacity-95">
             <div className="container mx-auto px-4 flex items-center gap-8 relative z-10">
-                <div className="text-green-500 text-xl font-medium">
+                <div className="text-green-500 text-xl font-medium shrink-0 w-8">
                     <Link to="/" className="flex gap-1 items-center">
                         <img className="w-8 h-8" src={logoImg} alt="" />
                         <span className="hidden lg:inline-block">

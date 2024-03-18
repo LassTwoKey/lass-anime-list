@@ -41,7 +41,7 @@ export const SearchList: FC<SearchListProps> = (props) => {
                         <Link
                             to={getToUrl(item)}
                             onClick={closeHandler}
-                            className="h-32 w-24 inline-flex relative"
+                            className="h-32 w-24 shrink-0 inline-flex relative"
                         >
                             <img
                                 className="rounded-lg absolute left-0 top-0 w-full h-full object-cover overflow-hidden"
