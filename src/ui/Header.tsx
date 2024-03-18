@@ -3,8 +3,8 @@ import logoImg from '@/assets/logo.png'
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -125,15 +125,16 @@ export const Header = () => {
                     </DialogTrigger>
                     <DialogContent closeHandler={closeHandler}>
                         <DialogHeader>
-                            <DialogTitle className="md:text-center">
+                            <DialogDescription className="text-left mt-8 md:text-center font-medium">
                                 Start searching for manga, anime
-                            </DialogTitle>
+                            </DialogDescription>
                         </DialogHeader>
-                        <div className="w-full md:w-96 mt-12 flex m-auto gap-4">
+                        <div className="w-full md:w-96 mt-4 flex m-auto gap-4">
                             <Input
                                 type="text"
                                 onChange={handleSearch}
                                 placeholder="Find title"
+                                className="tracking-wider font-medium"
                             />
                         </div>
                         <div className="w-full">
