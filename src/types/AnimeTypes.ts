@@ -38,3 +38,17 @@ export interface MediaAnimeDetails {
         edges: CharactersEdge[]
     }
 }
+
+export interface SearchAnimeDetails {
+    id: number
+    title: {
+        romaji: string
+        native: string
+    }
+    coverImage: {
+        large: string
+    }
+    meanScore: number
+    type: 'ANIME'
+    format: string
+}
