@@ -26,7 +26,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
     }
 
     return (
-        <div className="grid gap-6 text-sm lg:text-base">
+        <div className="grid grid-cols-2 gap-6 text-sm lg:text-base">
             {list.map((item) => (
                 <div
                     key={item.id}
@@ -35,6 +35,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                     <HoverCard openDelay={200}>
                         <HoverCardTrigger>
                             <ImageContent
+                                isSimple={false}
                                 classNames="h-32 w-24 lg:h-64 lg:w-44"
                                 item={item}
                             />

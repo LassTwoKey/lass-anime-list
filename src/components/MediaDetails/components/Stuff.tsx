@@ -53,28 +53,34 @@ export const Stuff: FC<StuffProps> = (props) => {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {stuffList.map((employee) => (
-                <div
-                    key={employee.id}
-                    className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
-                >
-                    <img
-                        className="flex object-cover w-16"
-                        src={employee.node.image.medium}
-                        alt=""
-                    />
-                    <div className="p-4 flex flex-col justify-between">
-                        <h3 className="text-white">
-                            {employee.node.name.userPreferred}
-                        </h3>
-                        <p>
-                            {getStringSeparatedByCommas(
-                                employee.node.primaryOccupations
-                            )}
-                        </p>
+            {!stuffList.length && (
+                <div className="font-medium p-3">No data avaible!</div>
+            )}
+            {!!stuffList.length &&
+                stuffList.map((employee) => (
+                    <div
+                        key={employee.id}
+                        className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
+                    >
+                        <div className="bg-slate-800 relative w-16 h-24">
+                            <img
+                                className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
+                                src={employee.node.image.medium}
+                                alt=""
+                            />
+                        </div>
+                        <div className="p-4 flex flex-col justify-between">
+                            <h3 className="text-white">
+                                {employee.node.name.userPreferred}
+                            </h3>
+                            <p>
+                                {getStringSeparatedByCommas(
+                                    employee.node.primaryOccupations
+                                )}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
         </div>
     )
 }

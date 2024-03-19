@@ -53,24 +53,30 @@ export const Characters: FC<CharactersProps> = (props) => {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {characterList.map((character) => (
-                <div
-                    key={character.id}
-                    className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
-                >
-                    <img
-                        className="flex object-cover w-16"
-                        src={character.node.image.medium}
-                        alt=""
-                    />
-                    <div className="p-4 flex flex-col justify-between">
-                        <h3 className="text-white">
-                            {character.node.name.userPreferred}
-                        </h3>
-                        <p>{capitalizeFirstLetter(character.role)}</p>
+            {!characterList.length && (
+                <div className="font-medium p-3">No data avaible!</div>
+            )}
+            {!!characterList.length &&
+                characterList.map((character) => (
+                    <div
+                        key={character.id}
+                        className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
+                    >
+                        <div className="bg-slate-800 relative w-16 h-24">
+                            <img
+                                className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
+                                src={character.node.image.medium}
+                                alt=""
+                            />
+                        </div>
+                        <div className="p-4 flex flex-col justify-between">
+                            <h3 className="text-white">
+                                {character.node.name.userPreferred}
+                            </h3>
+                            <p>{capitalizeFirstLetter(character.role)}</p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
         </div>
     )
 }

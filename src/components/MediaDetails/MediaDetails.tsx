@@ -26,7 +26,7 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
         <div className="text-gray-400 text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full">
                 <img
-                    className="absolute left-0 top-0 w-full h-full object-cover"
+                    className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                     src={mediaDetails.bannerImage || notFoundImage}
                     alt=""
                 />
@@ -36,7 +36,7 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
                     <div className="-translate-y-12 lg:-translate-y-28 shrink-0 w-24 lg:w-56">
                         <img
                             src={mediaDetails.coverImage.large}
-                            className="max-h-32 lg:max-h-72 rounded-lg overflow-hidden"
+                            className="max-h-32 lg:max-h-72 rounded-lg pointer-events-none select-none"
                             alt=""
                         />
                     </div>

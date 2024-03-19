@@ -5,6 +5,7 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 interface SearchListProps {
+    title: string
     items: SearchAnimeDetails[]
     isLoading: boolean
     isError: boolean
@@ -12,7 +13,7 @@ interface SearchListProps {
 }
 
 export const SearchList: FC<SearchListProps> = (props) => {
-    const { items, isLoading, isError, closeHandler } = props
+    const { title, items, isLoading, isError, closeHandler } = props
 
     if (isLoading) {
         return (
@@ -32,9 +33,13 @@ export const SearchList: FC<SearchListProps> = (props) => {
         return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
     }
 
+    const colorTitleClass = title === 'Anime' ? 'text-red-500' : 'text-blue-500'
+
     const ListCompont = (
-        <div className="">
-            <h2 className="text-red-500 pt-4 text-lg">Anime</h2>
+        <>
+            <h2 className={['pt-4 text-lg', colorTitleClass].join(' ')}>
+                {title}
+            </h2>
             <div className="py-4 grid gap-4">
                 {items.map((item) => (
                     <div key={item.id} className="flex gap-4">
@@ -64,8 +69,8 @@ export const SearchList: FC<SearchListProps> = (props) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </>
     )
 
-    return <div>{!!items.length && ListCompont}</div>
+    return <div className="md:w-1/2">{!!items.length && ListCompont}</div>
 }

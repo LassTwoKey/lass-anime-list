@@ -43,7 +43,7 @@ const GET_MEDIA_LIST = gql`
 
 export const Header = () => {
     const [
-        getData,
+        getAnimeData,
         {
             loading: animeListLoading,
             error: animeListError,
@@ -52,29 +52,59 @@ export const Header = () => {
     ] = useLazyQuery(GET_MEDIA_LIST, {
         fetchPolicy: 'network-only', // Doesn't check cache before making a network request
     })
+    const [
+        getMangaData,
+        {
+            loading: mangaListLoading,
+            error: mangaListError,
+            data: mangaListData,
+        },
+    ] = useLazyQuery(GET_MEDIA_LIST, {
+        fetchPolicy: 'network-only', // Doesn't check cache before making a network request
+    })
 
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [listData, setListData] = useState([])
+    const [animeList, setAnimeList] = useState([])
+    const [mangaList, setMangaList] = useState([])
     const [isOpenDialog, serIsOpenDialog] = useState(false)
 
     useEffect(() => {
-        setIsLoading(animeListLoading)
-        setIsError(!!animeListError)
+        setIsLoading(animeListLoading && mangaListLoading)
+        setIsError(!!animeListError && !!mangaListError)
         if (animeListData) {
-            setListData(animeListData?.Page?.media)
+            setAnimeList(animeListData?.Page?.media)
         }
-    }, [animeListData, animeListLoading, animeListError])
+        if (mangaListData) {
+            setMangaList(mangaListData?.Page?.media)
+        }
+    }, [
+        animeListData,
+        animeListError,
+        animeListLoading,
+        mangaListData,
+        mangaListError,
+        mangaListLoading,
+    ])
 
     const performSearch = async (word: string) => {
         if (!word) return
 
-        getData({
+        getAnimeData({
             variables: {
                 page: 1,
                 perPage: 10,
                 sort: 'TRENDING_DESC',
                 type: 'ANIME',
+                search: word,
+            },
+        })
+        getMangaData({
+            variables: {
+                page: 1,
+                perPage: 10,
+                sort: 'TRENDING_DESC',
+                type: 'MANGA',
                 search: word,
             },
         })
@@ -88,7 +118,8 @@ export const Header = () => {
 
     const closeHandler = () => {
         serIsOpenDialog(false)
-        setListData([])
+        setAnimeList([])
+        setMangaList([])
     }
     const openHandler = () => {
         serIsOpenDialog(true)
@@ -97,9 +128,13 @@ export const Header = () => {
     return (
         <header className="fixed w-full h-12 inset-0 flex items-center z-50  before:block before:absolute before:inset-0 before:bg-neutral-900 before:opacity-95">
             <div className="container mx-auto px-4 flex items-center gap-8 relative z-10">
-                <div className="text-green-500 text-xl font-medium shrink-0 w-8">
+                <div className="text-green-500 text-xl font-medium">
                     <Link to="/" className="flex gap-1 items-center">
-                        <img className="w-8 h-8" src={logoImg} alt="" />
+                        <img
+                            className="w-8 h-8 pointer-events-none"
+                            src={logoImg}
+                            alt=""
+                        />
                         <span className="hidden lg:inline-block">
                             Lass
                             <span className="text-sky-500"> Anime List</span>
@@ -137,13 +172,30 @@ export const Header = () => {
                                 className="tracking-wider font-medium"
                             />
                         </div>
-                        <div className="w-full">
-                            <SearchList
-                                isLoading={isLoading}
-                                isError={isError}
-                                items={listData}
-                                closeHandler={closeHandler}
-                            />
+                        <div className="w-full flex justify-center flex-col md:flex-row gap-6">
+                            {isLoading && (
+                                <div className="h-36 flex justify-center items-center">
+                                    <span className="loader-1"></span>
+                                </div>
+                            )}
+                            {!isLoading && (
+                                <SearchList
+                                    title="Anime"
+                                    isLoading={isLoading}
+                                    isError={isError}
+                                    items={animeList}
+                                    closeHandler={closeHandler}
+                                />
+                            )}
+                            {!isLoading && (
+                                <SearchList
+                                    title="Manga"
+                                    isLoading={isLoading}
+                                    isError={isError}
+                                    items={mangaList}
+                                    closeHandler={closeHandler}
+                                />
+                            )}
                         </div>
                     </DialogContent>
                 </Dialog>

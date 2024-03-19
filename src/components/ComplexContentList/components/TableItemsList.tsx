@@ -7,14 +7,18 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { CoverContent } from './CoverContent'
-import { capitalizeFirstLetter } from '@/utils'
+import {
+    capitalizeFirstLetter,
+    getStringSeparatedByCommas,
+    maxLength,
+} from '@/utils'
 import { ChartItem } from '@/types'
 
-interface CoverItemsListProps {
+interface TableItemsListProps {
     list: ChartItem[]
 }
 
-export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
+export const TableItemsList: FC<TableItemsListProps> = (props) => {
     const { list } = props
 
     const getToUrl = (item: ChartItem) => {
@@ -22,35 +26,26 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
     }
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-8 text-sm lg:text-base">
+        <div className="grid gap-6 text-sm lg:text-base">
             {list.map((item) => (
-                <HoverCard key={item.id} openDelay={200}>
-                    <HoverCardTrigger>
-                        <div className="flex flex-col relative w-full lg:flex-row bg-neutral-900 rounded-lg">
+                <div
+                    key={item.id}
+                    className="flex flex-col lg:flex-row bg-neutral-900 rounded-lg"
+                >
+                    <HoverCard openDelay={200}>
+                        <HoverCardTrigger>
                             <ImageContent
-                                isSimple
-                                classNames="w-full pb-[144%]"
+                                isSimple={false}
+                                classNames="h-32 w-24 lg:h-64 lg:w-44"
                                 item={item}
                             />
-                        </div>
-                        <div>
-                            <Link to={getToUrl(item)}>
-                                <h3 className="text-green-500 hover:text-green-600 duration-150 w-full truncate overflow-hidden text-ellipsis">
-                                    {item.title.romaji}
-                                </h3>
-                            </Link>
-                            <div className="flex gap-2 text-white">
-                                <p>{capitalizeFirstLetter(item.format)}</p>
-                                <span>/</span>
-                                2024
-                            </div>
-                        </div>
-                    </HoverCardTrigger>
-                    <HoverCardContent side={'right'}>
-                        <CoverContent item={item} />
-                    </HoverCardContent>
+                        </HoverCardTrigger>
+                        <HoverCardContent side={'right'}>
+                            <CoverContent item={item} />
+                        </HoverCardContent>
+                    </HoverCard>
 
-                    {/* <div className="m-4 flex max-h-56 overflow-hidden flex-col gap-2">
+                    <div className="m-4 flex max-h-56 overflow-hidden flex-col gap-2">
                         <Link to={getToUrl(item)}>
                             <h3 className=" overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
                                 {item.title.romaji}
@@ -73,8 +68,8 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                                 __html: maxLength(item.description, 150),
                             }}
                         ></div>
-                    </div> */}
-                </HoverCard>
+                    </div>
+                </div>
             ))}
         </div>
     )

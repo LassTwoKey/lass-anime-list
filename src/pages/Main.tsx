@@ -146,7 +146,7 @@ export const Main = () => {
                             </h2>
                             <ComplexContentList
                                 list={animeListData.Page.media}
-                                type="chart"
+                                type="table"
                             />
                         </div>
                         <div>
@@ -156,7 +156,7 @@ export const Main = () => {
                             </h2>
                             <ComplexContentList
                                 list={mangaListData.Page.media}
-                                type="chart"
+                                type="table"
                             />
                         </div>
                     </div>

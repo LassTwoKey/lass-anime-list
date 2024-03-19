@@ -41,7 +41,7 @@ const DialogContent = React.forwardRef<
         <DialogPrimitive.Content
             ref={ref}
             className={cn(
-                'bg-zinc-800 p-4 w-full h-full absolute top-0 left-0 z-50 overflow-y-auto',
+                'bg-zinc-800 p-4 w-full h-full fixed top-0 left-0 z-50 overflow-y-auto',
                 className
             )}
             {...props}
