@@ -10,6 +10,7 @@ export const getStringSeparatedByCommas = (strArray: string[]) => {
 }
 
 export const maxLength = (input: string, maxLength: number) => {
+    if (!input) return ''
     if (input.length <= maxLength) {
         return input
     } else {
@@ -79,6 +80,14 @@ export const getCurrentSeason = () => {
         year: currentDate.getFullYear(),
         currentSeason,
     }
+}
+
+export const calculateRating = (score: number) => {
+    if (typeof score === 'number') {
+        return (score / 10).toFixed(1)
+    }
+
+    return null
 }
 
 export { debounce } from '@/utils/debounce'

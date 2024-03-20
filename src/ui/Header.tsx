@@ -14,6 +14,7 @@ import { SearchList } from '@/components/SearchList'
 import { gql, useLazyQuery } from '@apollo/client'
 import { debounce } from '@/utils'
 import { useEffect, useState } from 'react'
+import { ErrorBlock } from './ErrorBlock'
 
 const GET_MEDIA_LIST = gql`
     query CurrentSeasonList(
@@ -178,7 +179,12 @@ export const Header = () => {
                                     <span className="loader-1"></span>
                                 </div>
                             )}
-                            {!isLoading && (
+                            {!!isError && (
+                                <div className="min-h-36 py-4 flex justify-center items-center text-red-500">
+                                    <ErrorBlock />
+                                </div>
+                            )}
+                            {!isLoading && !isError && (
                                 <SearchList
                                     title="Anime"
                                     isLoading={isLoading}
@@ -187,7 +193,7 @@ export const Header = () => {
                                     closeHandler={closeHandler}
                                 />
                             )}
-                            {!isLoading && (
+                            {!isLoading && !isError && (
                                 <SearchList
                                     title="Manga"
                                     isLoading={isLoading}

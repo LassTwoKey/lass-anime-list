@@ -32,7 +32,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                     key={item.id}
                     className="flex flex-col lg:flex-row bg-neutral-900 rounded-lg"
                 >
-                    <HoverCard openDelay={200}>
+                    <HoverCard openDelay={500}>
                         <HoverCardTrigger>
                             <ImageContent
                                 isSimple={false}
