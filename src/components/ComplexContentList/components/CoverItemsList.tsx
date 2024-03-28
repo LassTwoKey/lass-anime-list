@@ -24,7 +24,7 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-8 text-sm lg:text-base">
             {list.map((item) => (
-                <HoverCard key={item.id} openDelay={200}>
+                <HoverCard key={item.id} openDelay={500}>
                     <HoverCardTrigger>
                         <div className="flex flex-col relative w-full lg:flex-row bg-neutral-900 rounded-lg">
                             <ImageContent
@@ -35,7 +35,7 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                         </div>
                         <div>
                             <Link to={getToUrl(item)}>
-                                <h3 className="text-green-500 hover:text-green-600 duration-150 w-full truncate overflow-hidden text-ellipsis">
+                                <h3 className="text-green-500 pt-3 hover:text-green-600 duration-150 w-full truncate overflow-hidden text-ellipsis">
                                     {item.title.romaji}
                                 </h3>
                             </Link>
@@ -49,31 +49,6 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                     <HoverCardContent side={'right'}>
                         <CoverContent item={item} />
                     </HoverCardContent>
-
-                    {/* <div className="m-4 flex max-h-56 overflow-hidden flex-col gap-2">
-                        <Link to={getToUrl(item)}>
-                            <h3 className=" overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
-                                {item.title.romaji}
-                            </h3>
-                        </Link>
-
-                        <p className="text-gray-400">{item.title.native}</p>
-
-                        <div className="flex gap-2 text-white">
-                            <p>{capitalizeFirstLetter(item.format)}</p>
-                            <span>/</span>
-                            2024
-                            <span>/</span>
-                            <p>{getStringSeparatedByCommas(item.genres)}</p>
-                        </div>
-
-                        <div
-                            className="text-gray-400"
-                            dangerouslySetInnerHTML={{
-                                __html: maxLength(item.description, 150),
-                            }}
-                        ></div>
-                    </div> */}
                 </HoverCard>
             ))}
         </div>

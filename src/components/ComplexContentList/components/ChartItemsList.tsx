@@ -26,13 +26,13 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-6 text-sm lg:text-base">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm lg:text-base">
             {list.map((item) => (
                 <div
                     key={item.id}
                     className="flex flex-col lg:flex-row bg-neutral-900 rounded-lg"
                 >
-                    <HoverCard openDelay={200}>
+                    <HoverCard openDelay={500}>
                         <HoverCardTrigger>
                             <ImageContent
                                 isSimple={false}
