@@ -1,13 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    HttpLink,
+    from,
+} from '@apollo/client'
 
 import './assets/index.css'
 import { router } from './router/router.tsx'
 
-const client = new ApolloClient({
+const httpLink = new HttpLink({
     uri: 'https://graphql.anilist.co',
+    // credentials: 'same-origin', // omit, same-origin
+})
+
+const client = new ApolloClient({
     cache: new InMemoryCache({
         typePolicies: {
             Query: {
@@ -22,6 +32,7 @@ const client = new ApolloClient({
             },
         },
     }),
+    link: from([httpLink]),
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
