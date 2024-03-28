@@ -6,7 +6,7 @@ import { Manga } from '@/pages/Manga'
 import { AnimeDetails } from '@/pages/AnimeDetails'
 import { MangaDetails } from '@/pages/MangaDetails'
 
-export const router = createBrowserRouter([
+const routes = [
     {
         path: '/',
         element: <Main />,
@@ -27,4 +27,8 @@ export const router = createBrowserRouter([
         path: '/manga/:mediaId',
         element: <MangaDetails />,
     },
-])
+]
+
+export const router = createBrowserRouter(routes, {
+    basename: '/',
+})
