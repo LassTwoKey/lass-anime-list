@@ -5,14 +5,14 @@ import {
     ApolloClient,
     InMemoryCache,
     ApolloProvider,
-    HttpLink,
     from,
+    createHttpLink,
 } from '@apollo/client'
 
 import './assets/index.css'
 import { router } from './router/router.tsx'
 
-const httpLink = new HttpLink({
+const httpLink = createHttpLink({
     uri: 'https://graphql.anilist.co',
     // credentials: 'same-origin', // omit, same-origin
 })
