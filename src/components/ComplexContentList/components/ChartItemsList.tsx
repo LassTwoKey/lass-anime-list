@@ -13,19 +13,30 @@ import {
     maxLength,
 } from '@/utils'
 import { ChartItem } from '@/types'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { ItemsLoader } from './ItemsLoader'
 
 interface ChartItemsListProps {
     list: ChartItem[]
+    fetchData?: () => unknown
 }
 
 export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
-    const { list } = props
+    const { list, fetchData } = props
 
     const getToUrl = (item: ChartItem) => {
         return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
     }
 
-    return (
+    const isFetchData = typeof fetchData === 'function'
+
+    const performFetch = () => {
+        if (fetchData) {
+            fetchData()
+        }
+    }
+
+    const content = (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm lg:text-base">
             {list.map((item) => (
                 <div
@@ -72,5 +83,16 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                 </div>
             ))}
         </div>
+    )
+
+    return (
+        <InfiniteScroll
+            dataLength={list.length}
+            next={performFetch}
+            hasMore={isFetchData}
+            loader={<ItemsLoader />}
+        >
+            {content}
+        </InfiniteScroll>
     )
 }

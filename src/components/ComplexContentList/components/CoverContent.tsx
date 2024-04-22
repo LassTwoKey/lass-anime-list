@@ -9,6 +9,7 @@ import {
     getStringSeparatedByCommas,
     maxLength,
 } from '@/utils'
+import { cn } from '@/lib/utils'
 
 const GET_ANIME_INFO = gql`
     query GetItemInfo($id: Int) {
@@ -133,7 +134,7 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
                 <h3 className="text-green-500 text-xl">{item.title.romaji}</h3>
                 <p className="text-gray-400">{item.title.native}</p>
             </div>
-            <div className="pt-4 text-gray-400">
+            <div className={cn('text-gray-400', !!item.description && 'pt-4')}>
                 {!isShowText && (
                     <p
                         dangerouslySetInnerHTML={{
@@ -148,14 +149,16 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
                         }}
                     ></p>
                 )}
-                <div className="flex justify-center mt-4">
-                    <Button
-                        variant={'secondary'}
-                        onClick={() => setIsShowText((prev) => !prev)}
-                    >
-                        {isShowText ? 'Hide' : 'Read more'}
-                    </Button>
-                </div>
+                {!!item.description && (
+                    <div className="flex justify-center mt-4">
+                        <Button
+                            variant={'secondary'}
+                            onClick={() => setIsShowText((prev) => !prev)}
+                        >
+                            {isShowText ? 'Hide' : 'Read more'}
+                        </Button>
+                    </div>
+                )}
                 <div className="mt-4 flex flex-col gap-1">
                     {itemInfoList.map((infoItem) => (
                         <div key={infoItem[0]} className="grid grid-cols-2">

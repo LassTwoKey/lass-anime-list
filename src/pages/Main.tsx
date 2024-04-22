@@ -138,10 +138,10 @@ export const Main = () => {
 
             <div className="py-8">
                 <div className="container mx-auto px-4">
-                    <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+                    <div className="grid gap-12 grid-cols-1 lg:grid-cols-2">
                         <div>
                             <h2 className="font-medium text-xl lg:text-3xl text-white mb-6">
-                                Trending{' '}
+                                Trending 📺
                                 <span className="text-red-500">Anime</span>
                             </h2>
                             <ComplexContentList
@@ -151,7 +151,7 @@ export const Main = () => {
                         </div>
                         <div>
                             <h2 className="font-medium text-xl lg:text-3xl text-white mb-6">
-                                Trending{' '}
+                                Trending 📘
                                 <span className="text-blue-500">Manga</span>
                             </h2>
                             <ComplexContentList

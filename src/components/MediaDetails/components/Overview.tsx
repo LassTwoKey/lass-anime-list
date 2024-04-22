@@ -24,7 +24,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             'Start Date': getFormattedDate(animeDetails.startDate),
             'End Date': getFormattedDate(animeDetails.endDate),
             Genres: getStringSeparatedByCommas(animeDetails.genres),
-            Source: capitalizeFirstLetter(animeDetails.source),
+            Source: capitalizeFirstLetter(animeDetails.source).replace(
+                '_',
+                ' '
+            ),
             Episodes: animeDetails.episodes,
             Status: capitalizeFirstLetter(animeDetails.status),
             Duration: `${animeDetails.duration} mins`,

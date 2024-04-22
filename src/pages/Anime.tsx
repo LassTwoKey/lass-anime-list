@@ -1,8 +1,8 @@
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import { PageWrapper } from '@/ui/PageWrapper'
-import { gql, useQuery } from '@apollo/client'
-import { SetStateAction, useState } from 'react'
+import { gql, useLazyQuery } from '@apollo/client'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Icon from '@mdi/react'
 import { mdiViewGrid, mdiViewList, mdiViewModule } from '@mdi/js'
@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { filters } from '@/constants/filters'
+import { ChartItem, ListType } from '@/types'
 
 const GET_MEDIA_LIST = gql`
     query CurrentSeasonList(
@@ -44,37 +45,71 @@ const GET_MEDIA_LIST = gql`
 `
 
 export const Anime = () => {
-    const [type, setType] = useState<'chart' | 'cover' | 'table'>('chart')
+    const currentType = (localStorage.getItem('animeType') ??
+        'chart') as ListType
+    const [type, setType] = useState(currentType)
     const [filter, setFilter] = useState(filters[0])
 
-    const {
-        loading: animeListLoading,
-        error: animeListError,
-        data: animeListData,
-    } = useQuery(GET_MEDIA_LIST, {
-        variables: {
-            page: 1,
-            perPage: 10,
-            sort: filter.id,
-            type: 'ANIME',
-        },
+    const [
+        getAnimeData,
+        { loading: animeListLoading, error: animeListError, data },
+    ] = useLazyQuery(GET_MEDIA_LIST, {
+        fetchPolicy: 'network-only', // Doesn't check cache before making a network request
     })
+
+    const [animeListData, setAnimeListData] = useState<ChartItem[]>([])
+    const [page, setPage] = useState(1)
 
     const selectChartHanlder = () => {
         setType('chart')
+        localStorage.setItem('animeType', 'chart')
     }
     const selectCoverHanlder = () => {
         setType('cover')
+        localStorage.setItem('animeType', 'cover')
     }
     const selectTableHanlder = () => {
         setType('table')
+        localStorage.setItem('animeType', 'table')
     }
 
     const animeFilterHandler = (
         filter: SetStateAction<{ id: string; name: string }>
     ) => {
         setFilter(filter)
+        setAnimeListData([])
     }
+
+    const fetchData = async () => {
+        await getAnimeData({
+            variables: {
+                page: page + 1,
+                perPage: 10,
+                sort: filter.id,
+                type: 'ANIME',
+            },
+        })
+
+        setPage((prev) => prev + 1)
+    }
+
+    useEffect(() => {
+        getAnimeData({
+            variables: {
+                page: 1,
+                perPage: 10,
+                sort: filter.id,
+                type: 'ANIME',
+            },
+        })
+    }, [getAnimeData, filter.id])
+
+    useEffect(() => {
+        // тут бы чекать по id для большей безопасности, но вродь все ок работает без дупликатов
+        if (data?.Page?.media) {
+            setAnimeListData((prev) => prev.concat(data?.Page?.media))
+        }
+    }, [data?.Page?.media])
 
     return (
         <PageWrapper>
@@ -82,7 +117,7 @@ export const Anime = () => {
                 <div className="container mx-auto px-4">
                     <div className="py-4">
                         <h1 className="font-medium text-xl lg:text-3xl text-white mb-6">
-                            <span className="text-red-500">Anime</span>
+                            <span className="text-red-500">📺 Anime</span>
                         </h1>
 
                         <div className="flex justify-between mb-3">
@@ -149,18 +184,19 @@ export const Anime = () => {
                             </div>
                         </div>
 
-                        {!!animeListData?.Page?.media?.length && (
+                        {!!animeListData.length && (
                             <ComplexContentList
-                                list={animeListData.Page.media}
+                                list={animeListData}
                                 type={type}
+                                fetchData={fetchData}
                             />
                         )}
-                        {animeListLoading && (
+                        {!animeListData.length && animeListLoading && (
                             <div className="py-24 flex justify-center items-center">
                                 <span className="loader-1"></span>
                             </div>
                         )}
-                        {!!animeListError && (
+                        {!animeListData.length && animeListError && (
                             <div className="h-full flex justify-center items-center text-red-500">
                                 <ErrorBlock />
                             </div>

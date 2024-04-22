@@ -1,8 +1,8 @@
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import { PageWrapper } from '@/ui/PageWrapper'
-import { gql, useQuery } from '@apollo/client'
-import { SetStateAction, useState } from 'react'
+import { gql, useLazyQuery } from '@apollo/client'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Icon from '@mdi/react'
 import { mdiViewGrid, mdiViewList, mdiViewModule } from '@mdi/js'
@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { filters } from '@/constants/filters'
+import { ChartItem, ListType } from '@/types'
 
 const GET_MEDIA_LIST = gql`
     query CurrentSeasonList(
@@ -44,37 +45,71 @@ const GET_MEDIA_LIST = gql`
 `
 
 export const Manga = () => {
-    const [type, setType] = useState<'chart' | 'cover' | 'table'>('chart')
+    const currentType = (localStorage.getItem('mangaType') ??
+        'chart') as ListType
+    const [type, setType] = useState(currentType)
     const [filter, setFilter] = useState(filters[0])
 
-    const {
-        loading: mangaListLoading,
-        error: mangaListError,
-        data: mangaListData,
-    } = useQuery(GET_MEDIA_LIST, {
-        variables: {
-            page: 1,
-            perPage: 10,
-            sort: filter.id,
-            type: 'MANGA',
-        },
+    const [
+        getMangaData,
+        { loading: mangaListLoading, error: mangaListError, data },
+    ] = useLazyQuery(GET_MEDIA_LIST, {
+        fetchPolicy: 'network-only', // Doesn't check cache before making a network request
     })
+
+    const [mangaListData, setMangaListData] = useState<ChartItem[]>([])
+    const [page, setPage] = useState(1)
 
     const selectChartHanlder = () => {
         setType('chart')
+        localStorage.setItem('mangaType', 'chart')
     }
     const selectCoverHanlder = () => {
         setType('cover')
+        localStorage.setItem('mangaType', 'cover')
     }
     const selectTableHanlder = () => {
         setType('table')
+        localStorage.setItem('mangaType', 'table')
     }
 
     const mangaFilterHandler = (
         filter: SetStateAction<{ id: string; name: string }>
     ) => {
         setFilter(filter)
+        setMangaListData([])
     }
+
+    const fetchData = async () => {
+        await getMangaData({
+            variables: {
+                page: page + 1,
+                perPage: 10,
+                sort: filter.id,
+                type: 'MANGA',
+            },
+        })
+
+        setPage((prev) => prev + 1)
+    }
+
+    useEffect(() => {
+        getMangaData({
+            variables: {
+                page: 1,
+                perPage: 10,
+                sort: filter.id,
+                type: 'MANGA',
+            },
+        })
+    }, [getMangaData, filter.id])
+
+    useEffect(() => {
+        // тут бы чекать по id для большей безопасности, но вродь все ок работает без дупликатов
+        if (data?.Page?.media) {
+            setMangaListData((prev) => prev.concat(data?.Page?.media))
+        }
+    }, [data?.Page?.media])
 
     return (
         <PageWrapper>
@@ -82,7 +117,7 @@ export const Manga = () => {
                 <div className="container mx-auto px-4">
                     <div className="py-4">
                         <h1 className="font-medium text-xl lg:text-3xl text-white mb-6">
-                            <span className="text-blue-500">Manga</span>
+                            <span className="text-blue-500">📘 Manga</span>
                         </h1>
 
                         <div className="flex justify-between mb-3">
@@ -149,18 +184,19 @@ export const Manga = () => {
                             </div>
                         </div>
 
-                        {!!mangaListData?.Page?.media?.length && (
+                        {!!mangaListData.length && (
                             <ComplexContentList
-                                list={mangaListData.Page.media}
+                                list={mangaListData}
                                 type={type}
+                                fetchData={fetchData}
                             />
                         )}
-                        {mangaListLoading && (
+                        {!mangaListData.length && mangaListLoading && (
                             <div className="py-24 flex justify-center items-center">
                                 <span className="loader-1"></span>
                             </div>
                         )}
-                        {!!mangaListError && (
+                        {!mangaListData.length && mangaListError && (
                             <div className="h-full flex justify-center items-center text-red-500">
                                 <ErrorBlock />
                             </div>

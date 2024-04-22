@@ -9,19 +9,30 @@ import {
 import { CoverContent } from './CoverContent'
 import { capitalizeFirstLetter } from '@/utils'
 import { ChartItem } from '@/types'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { ItemsLoader } from './ItemsLoader'
 
 interface CoverItemsListProps {
     list: ChartItem[]
+    fetchData?: () => unknown
 }
 
 export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
-    const { list } = props
+    const { list, fetchData } = props
 
     const getToUrl = (item: ChartItem) => {
         return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
     }
 
-    return (
+    const isFetchData = typeof fetchData === 'function'
+
+    const performFetch = () => {
+        if (fetchData) {
+            fetchData()
+        }
+    }
+
+    const content = (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-8 text-sm lg:text-base">
             {list.map((item) => (
                 <HoverCard key={item.id} openDelay={500}>
@@ -52,5 +63,16 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                 </HoverCard>
             ))}
         </div>
+    )
+
+    return (
+        <InfiniteScroll
+            dataLength={list.length}
+            next={performFetch}
+            hasMore={isFetchData}
+            loader={<ItemsLoader />}
+        >
+            {content}
+        </InfiniteScroll>
     )
 }

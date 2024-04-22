@@ -14,3 +14,5 @@ export interface ChartItem {
     format: string
     description: string
 }
+
+export type ListType = 'cover' | 'chart' | 'table'
