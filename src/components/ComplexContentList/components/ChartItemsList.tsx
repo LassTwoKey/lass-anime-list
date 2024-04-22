@@ -87,6 +87,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
 
     return (
         <InfiniteScroll
+            className="px-4 -mx-4"
             dataLength={list.length}
             next={performFetch}
             hasMore={isFetchData}
