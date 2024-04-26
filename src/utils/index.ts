@@ -25,10 +25,48 @@ export const getFormattedDate = (args: {
 }) => {
     const { year, month, day } = args
 
-    if (!year || !month || !day) return null
-    const date = new Date(year, month - 1, day) // month - 1 because JavaScript months are zero-based
+    if (day && month && year) {
+        const monthText = new Date(year, month - 1, day).toLocaleString(
+            'en-US',
+            { month: 'long' }
+        )
+        return `${monthText} ${day}, ${year}`
+    }
 
-    return `${date.toLocaleString('en-US', { month: 'long' })} ${day}, ${year}`
+    if (month && year) {
+        const monthText = new Date(2000, month, 1).toLocaleString('en', {
+            month: 'long',
+        })
+        return `${monthText}, ${year}`
+    }
+
+    if (day && year) {
+        return `${day}, ${year}`
+    }
+
+    if (day && month) {
+        const monthText = new Date(2000, month, 1).toLocaleString('en', {
+            month: 'long',
+        })
+        return `${monthText} ${day}`
+    }
+
+    if (day) {
+        return `${day} day`
+    }
+
+    if (month) {
+        const monthText = new Date(2000, month, 1).toLocaleString('en', {
+            month: 'long',
+        })
+        return monthText
+    }
+
+    if (year) {
+        return `${year} year`
+    }
+
+    return null
 }
 
 export const getAnimationStudio = (studios: { edges: StudiosEdge[] }) => {

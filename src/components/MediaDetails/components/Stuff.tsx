@@ -62,7 +62,7 @@ export const Stuff: FC<StuffProps> = (props) => {
                         key={employee.id}
                         className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
                     >
-                        <div className="bg-slate-800 relative w-16 h-24">
+                        <div className="bg-slate-800 shrink-0 relative w-16 h-24">
                             <img
                                 className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                                 src={employee.node.image.medium}

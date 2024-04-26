@@ -5,6 +5,7 @@ import { Anime } from '@/pages/Anime'
 import { Manga } from '@/pages/Manga'
 import { AnimeDetails } from '@/pages/AnimeDetails'
 import { MangaDetails } from '@/pages/MangaDetails'
+import { CharacterDetails } from '@/pages/CharacterDetails'
 
 const routes = [
     {
@@ -26,6 +27,10 @@ const routes = [
     {
         path: '/manga/:mediaId',
         element: <MangaDetails />,
+    },
+    {
+        path: '/character/:characterId',
+        element: <CharacterDetails />,
     },
 ]
 

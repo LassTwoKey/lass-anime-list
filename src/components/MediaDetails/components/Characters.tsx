@@ -2,7 +2,7 @@ import { CharactersEdge } from '@/types'
 import { capitalizeFirstLetter } from '@/utils'
 import { gql, useQuery } from '@apollo/client'
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const GET_CHARACTERS = gql`
     query GetCharacters($id: Int, $type: MediaType) {
@@ -12,6 +12,7 @@ const GET_CHARACTERS = gql`
                     id
                     role
                     node {
+                        id
                         name {
                             userPreferred
                         }
@@ -59,20 +60,25 @@ export const Characters: FC<CharactersProps> = (props) => {
             {!!characterList.length &&
                 characterList.map((character) => (
                     <div
-                        key={character.id}
+                        key={character.node.id}
                         className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
                     >
-                        <div className="bg-slate-800 relative w-16 h-24">
+                        <Link
+                            to={`/character/${character.node.id}`}
+                            className="bg-slate-800 shrink-0 relative w-16 h-24"
+                        >
                             <img
                                 className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                                 src={character.node.image.medium}
                                 alt=""
                             />
-                        </div>
+                        </Link>
                         <div className="p-4 flex flex-col justify-between">
-                            <h3 className="text-white">
-                                {character.node.name.userPreferred}
-                            </h3>
+                            <Link to={`/character/${character.node.id}`}>
+                                <h3 className="text-white hover:text-green-500 duration-150">
+                                    {character.node.name.userPreferred}
+                                </h3>
+                            </Link>
                             <p>{capitalizeFirstLetter(character.role)}</p>
                         </div>
                     </div>
