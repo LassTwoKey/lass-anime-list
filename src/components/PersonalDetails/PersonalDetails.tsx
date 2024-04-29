@@ -1,41 +1,45 @@
 import { cn } from '@/lib/utils'
-import { Character } from '@/types'
+import { Character, Staff, StaffMediaItem } from '@/types'
 import { getFormattedDate } from '@/utils'
 import { FC } from 'react'
+import { SimpleContentList } from './SimpleContentList'
 
 interface PersonalDetailsProps {
-    character: Character
+    info: Character | Staff
+    list?: StaffMediaItem[]
 }
 
-export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
-    const { character } = props
+interface CurrentInfo extends Character, Staff {}
 
-    const isMarginTop = !character.description.includes('<p><strong>')
+export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
+    const { info, list } = props
+
+    const currentInfo = info as CurrentInfo
+
+    const isMarginTop = !currentInfo.description.includes('<p><strong>')
 
     const description = (
         <div
             className={cn('markdown description', isMarginTop && 'pt-4')}
             dangerouslySetInnerHTML={{
-                __html: character.description,
+                __html: currentInfo.description,
             }}
         ></div>
     )
-    // Origin =========================
-    // getFormattedDate(character.dateOfBirth)
-    // Origin =========================
 
-    // getFormattedDate({year: 2000, month: 3, day: 18})
-    // getFormattedDate({year: 2000, month: 3, day: null})
-    // getFormattedDate({year: 2000, month: null, day: null})
-    // getFormattedDate({year: null, month: null, day: null})
-
-    // getFormattedDate({year: null, month: 3, day: 18})
-    // getFormattedDate({year: null, month: null, day: 18})
-    // getFormattedDate({year: null, month: 3, day: null})
     const personInfo = {
-        Birthday: getFormattedDate(character.dateOfBirth),
-        Age: character.age,
-        Gender: character.gender,
+        Birthday: getFormattedDate(currentInfo.dateOfBirth),
+        Age: currentInfo.age,
+        Gender: currentInfo.gender,
+
+        // only for staff
+        'Blood type': currentInfo.bloodType,
+        'Date of death':
+            currentInfo.dateOfDeath &&
+            getFormattedDate(currentInfo.dateOfDeath),
+        'Years active': currentInfo.yearsActive?.join(', '),
+        Hometown: currentInfo.homeTown,
+        'Primary occupations': currentInfo.primaryOccupations?.join(', '),
     }
 
     const itemInfoList = []
@@ -62,6 +66,9 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
         </div>
     )
 
+    const animeList = list?.filter((item) => item.type === 'ANIME')
+    const mangaList = list?.filter((item) => item.type === 'MANGA')
+
     return (
         <div className="text-gray-400 bg-neutral-900 h-full text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full bg-indigo-950"></div>
@@ -69,16 +76,16 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
                 <div className="container mx-auto flex px-4 -mb-4 lg:mb-0">
                     <div className="-translate-y-12 lg:-translate-y-28 shrink-0 w-24 lg:w-56">
                         <img
-                            src={character.image.large}
+                            src={currentInfo.image.large}
                             className="max-h-32 lg:max-h-72 rounded-lg pointer-events-none select-none"
                             alt=""
                         />
                     </div>
                     <div className="py-4 pl-2 lg:pl-2 lg:py-5">
                         <h1 className="text-lg lg:text-2xl font-medium mb-3 text-white">
-                            {character.name.userPreferred}
+                            {currentInfo.name.userPreferred}
                         </h1>
-                        <h2 className="mb-3">{character.name.native}</h2>
+                        <h2 className="mb-3">{currentInfo.name.native}</h2>
                         <div className="hidden lg:block">
                             {infoList}
                             {description}
@@ -89,6 +96,28 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
                     {infoList}
                     {description}
                 </div>
+            </div>
+            <div className="mb-8">
+                {animeList?.length && (
+                    <div className="container mx-auto px-4">
+                        <h3 className="font-medium text-xl lg:text-3xl text-white mb-6">
+                            <span className="text-red-500">ANIME</span> STAFF
+                            ROLES
+                        </h3>
+                        <SimpleContentList list={animeList} />
+                    </div>
+                )}
+            </div>
+            <div className="mb-8">
+                {mangaList?.length && (
+                    <div className="container mx-auto px-4">
+                        <h3 className="font-medium text-xl lg:text-3xl text-white mb-6">
+                            <span className="text-blue-500">MANGA</span> STAFF
+                            ROLES
+                        </h3>
+                        <SimpleContentList list={mangaList} />
+                    </div>
+                )}
             </div>
         </div>
     )

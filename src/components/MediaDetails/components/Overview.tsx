@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import {
     capitalizeFirstLetter,
+    createJsxLinks,
     getAnimationStudio,
     getCharactersName,
     getFormattedDate,
@@ -33,7 +34,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             Duration: `${animeDetails.duration} mins`,
             Season: `${capitalizeFirstLetter(animeDetails.season)} ${animeDetails.seasonYear}`,
             Studio: getAnimationStudio(animeDetails.studios),
-            Characters: getCharactersName(animeDetails.characters),
+            Characters: createJsxLinks(
+                getCharactersName(animeDetails.characters),
+                '/character'
+            ),
         }
     }
 
@@ -46,7 +50,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             Genres: getStringSeparatedByCommas(mangaDetails.genres),
             Source: capitalizeFirstLetter(mangaDetails.source),
             Status: capitalizeFirstLetter(mangaDetails.status),
-            Characters: getCharactersName(mangaDetails.characters),
+            Characters: createJsxLinks(
+                getCharactersName(mangaDetails.characters),
+                '/character'
+            ),
         }
     }
 
@@ -67,7 +74,7 @@ export const Overview: FC<OverviewProps> = (props) => {
         <div>
             <div className="mt-4 flex flex-col gap-3">
                 {itemInfoList.map((mediaInfo) => (
-                    <div key={mediaInfo[0]} className="grid grid-cols-2">
+                    <div key={`${mediaInfo[0]}`} className="grid grid-cols-2">
                         <div className="font-medium">{mediaInfo[0]}</div>
                         <div>{mediaInfo[1]}</div>
                     </div>

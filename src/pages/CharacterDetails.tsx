@@ -56,7 +56,7 @@ export const CharacterDetails = () => {
 
     return (
         <PageWrapper>
-            <PersonalDetails character={data?.Character} />
+            <PersonalDetails info={data?.Character} />
         </PageWrapper>
     )
 }

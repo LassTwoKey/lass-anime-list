@@ -77,10 +77,10 @@ export const getAnimationStudio = (studios: { edges: StudiosEdge[] }) => {
 }
 
 export const getCharactersName = (characters: { edges: CharactersEdge[] }) => {
-    const charactersList = characters.edges.map(
-        (character) => character.node.name.userPreferred
-    )
-    return getStringSeparatedByCommas(charactersList)
+    return characters.edges.map((character) => ({
+        content: character.node.name.userPreferred,
+        id: character.node.id,
+    }))
 }
 
 export const getCurrentSeason = () => {
@@ -129,3 +129,4 @@ export const calculateRating = (score: number) => {
 }
 
 export { debounce } from '@/utils/debounce'
+export { createJsxLinks } from '@/utils/linkUtils'

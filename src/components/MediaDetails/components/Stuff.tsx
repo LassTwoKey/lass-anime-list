@@ -2,7 +2,7 @@ import { StuffEdge } from '@/types'
 import { getStringSeparatedByCommas } from '@/utils'
 import { gql, useQuery } from '@apollo/client'
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const GET_STUFF = gql`
     query GetStuff($id: Int, $type: MediaType) {
@@ -11,6 +11,7 @@ const GET_STUFF = gql`
                 edges {
                     id
                     node {
+                        id
                         name {
                             userPreferred
                         }
@@ -62,17 +63,22 @@ export const Stuff: FC<StuffProps> = (props) => {
                         key={employee.id}
                         className="flex bg-neutral-900 rounded-lg overflow-hidden h-24"
                     >
-                        <div className="bg-slate-800 shrink-0 relative w-16 h-24">
+                        <Link
+                            to={`/staff/${employee.node.id}`}
+                            className="flex bg-slate-800 shrink-0 relative w-16 h-24"
+                        >
                             <img
                                 className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                                 src={employee.node.image.medium}
                                 alt=""
                             />
-                        </div>
+                        </Link>
                         <div className="p-4 flex flex-col justify-between">
-                            <h3 className="text-white">
-                                {employee.node.name.userPreferred}
-                            </h3>
+                            <Link to={`/staff/${employee.node.id}`}>
+                                <h3 className="text-white hover:text-green-500 duration-150">
+                                    {employee.node.name.userPreferred}
+                                </h3>
+                            </Link>
                             <p>
                                 {getStringSeparatedByCommas(
                                     employee.node.primaryOccupations

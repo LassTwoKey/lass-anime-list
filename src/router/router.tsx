@@ -6,6 +6,7 @@ import { Manga } from '@/pages/Manga'
 import { AnimeDetails } from '@/pages/AnimeDetails'
 import { MangaDetails } from '@/pages/MangaDetails'
 import { CharacterDetails } from '@/pages/CharacterDetails'
+import { StaffDetails } from '@/pages/StaffDetails'
 
 const routes = [
     {
@@ -31,6 +32,10 @@ const routes = [
     {
         path: '/character/:characterId',
         element: <CharacterDetails />,
+    },
+    {
+        path: '/staff/:staffId',
+        element: <StaffDetails />,
     },
 ]
 

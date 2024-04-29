@@ -37,6 +37,7 @@ const GET_MANGA = gql`
             characters {
                 edges {
                     node {
+                        id
                         name {
                             userPreferred
                         }

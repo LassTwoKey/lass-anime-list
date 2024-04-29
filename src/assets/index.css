@@ -186,3 +186,10 @@ body,
     margin-inline-end: 0px;
     unicode-bidi: isolate;
 }
+
+.markdown a {
+    color: rgb(61, 180, 242);
+}
+.markdown a:hover {
+    text-decoration: underline;
+}

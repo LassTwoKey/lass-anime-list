@@ -49,6 +49,7 @@ const GET_ANIME = gql`
             characters {
                 edges {
                     node {
+                        id
                         name {
                             userPreferred
                         }
