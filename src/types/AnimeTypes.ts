@@ -52,3 +52,9 @@ export interface SearchAnimeDetails {
     type: 'ANIME'
     format: string
 }
+
+export interface AnimeFilters {
+    sort: string | null
+    status: string | null
+    year: string | null
+}

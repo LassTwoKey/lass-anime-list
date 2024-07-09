@@ -9,7 +9,12 @@ import { ErrorBlock } from '@/ui/ErrorBlock'
 const GET_CURRENT_SEASON_LIST = gql`
     query CurrentSeasonList($page: Int, $perPage: Int, $seasonYear: Int) {
         Page(page: $page, perPage: $perPage) {
-            media(seasonYear: $seasonYear, type: ANIME, status: RELEASING) {
+            media(
+                seasonYear: $seasonYear
+                type: ANIME
+                status: RELEASING
+                isAdult: false
+            ) {
                 id
                 title {
                     romaji
@@ -54,6 +59,7 @@ const GET_MEDIA_LIST = gql`
 
 export const Main = () => {
     const currentSeason = getCurrentSeason()
+
     const {
         loading: currentListLoading,
         error: currentListError,

@@ -1,4 +1,8 @@
-export type { MediaAnimeDetails, SearchAnimeDetails } from '@/types/AnimeTypes'
+export type {
+    MediaAnimeDetails,
+    SearchAnimeDetails,
+    AnimeFilters,
+} from '@/types/AnimeTypes'
 export type { MediaMangaDetails } from '@/types/MangaTypes'
 export type { Character } from '@/types/CharacterTypes'
 export type { Staff, StaffMediaItem } from '@/types/StaffTypes'

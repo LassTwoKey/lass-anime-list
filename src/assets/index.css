@@ -28,7 +28,7 @@
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 60 9.1% 97.8%;
 
-        --border: 20 5.9% 90%;
+        --border: 218 11% 65%;
         --input: 20 5.9% 90%;
         --ring: 20 14.3% 4.1%;
 
@@ -192,4 +192,21 @@ body,
 }
 .markdown a:hover {
     text-decoration: underline;
+}
+
+/* html {
+    width: 100vw;
+    overflow-x: hidden;
+    padding-right: calc(0 - var(--removed-body-scroll-bar-size)) !important;
+}
+
+header {
+    padding-right: calc(
+        0 - var(--removed-body-scroll-bar-size) + 3rem
+    ) !important;
+} */
+
+html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }

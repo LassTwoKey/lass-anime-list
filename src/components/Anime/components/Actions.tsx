@@ -1,0 +1,48 @@
+import { FC } from 'react'
+import { ContentView } from './ContentView'
+import { Filter } from './Filter'
+import { SORT_BY_LIST } from '../static/filters'
+import { AnimeFilters, ListType } from '@/types'
+
+interface ActionsProps {
+    filters: AnimeFilters
+    setType: React.Dispatch<React.SetStateAction<ListType>>
+    setFilters: React.Dispatch<React.SetStateAction<AnimeFilters>>
+}
+
+export const Actions: FC<ActionsProps> = (props) => {
+    const { filters, setType, setFilters } = props
+
+    const setCurrentFilter = (name: string, value: string) => {
+        setFilters((prev) => ({
+            ...prev,
+            [name]: value,
+        }))
+    }
+
+    const removeCurrentFilter = (name: string) => {
+        setFilters((prev) => ({
+            ...prev,
+            [name]: null,
+        }))
+    }
+
+    return (
+        <div className="flex justify-between mb-3">
+            <div className="flex items-center gap-2">
+                <p className="font-medium whitespace-nowrap text-gray-400">
+                    Sort by:
+                </p>
+                <Filter
+                    title="None"
+                    name="sort"
+                    value={filters['sort']}
+                    list={SORT_BY_LIST}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+            </div>
+            <ContentView setViewType={setType} />
+        </div>
+    )
+}

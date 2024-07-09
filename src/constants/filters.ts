@@ -1,22 +1,22 @@
 export const filters = [
     {
-        id: 'SCORE',
+        id: 'SCORE_DESC',
         name: 'Score',
     },
     {
         id: 'TITLE_ROMAJI',
-        name: 'Name',
+        name: 'Title',
     },
     {
-        id: 'POPULARITY',
+        id: 'POPULARITY_DESC',
         name: 'Popularity',
     },
+    // {
+    //     id: 'STATUS',
+    //     name: 'Status',
+    // },
     {
-        id: 'STATUS',
-        name: 'Status',
-    },
-    {
-        id: 'TRENDING',
+        id: 'TRENDING_DESC',
         name: 'Trending',
     },
 ]
