@@ -53,8 +53,11 @@ export interface SearchAnimeDetails {
     format: string
 }
 
+export type AnimeFilter = 'sort' | 'status' | 'year' | 'season'
+
 export interface AnimeFilters {
     sort: string | null
     status: string | null
     year: string | null
+    season: string | null
 }

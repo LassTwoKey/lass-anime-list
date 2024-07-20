@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Filter } from './Filter'
-import { YEAR_LIST, STATUS_LIST } from '../static/filters'
+import { YEAR_LIST, STATUS_LIST, SEASON_LIST } from '../static/filters'
 import { cn } from '@/lib/utils'
-import { AnimeFilters } from '@/types'
+import { AnimeFilters, AnimeFilter } from '@/types'
 
 interface SideFiltersProps {
     className: string
@@ -20,7 +20,9 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
             [name]: value,
         }))
     }
-    const removeCurrentFilter = (name: string) => {
+    const removeCurrentFilter = (name: AnimeFilter) => {
+        if (!filters[name]) return
+
         setFilters((prev) => ({
             ...prev,
             [name]: null,
@@ -44,6 +46,14 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 name="status"
                 value={filters['status']}
                 list={STATUS_LIST}
+                setCurrentFilter={setCurrentFilter}
+                removeCurrentFilter={removeCurrentFilter}
+            />
+            <Filter
+                title="Season"
+                name="season"
+                value={filters['season']}
+                list={SEASON_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />

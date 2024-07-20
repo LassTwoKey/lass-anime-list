@@ -31,9 +31,28 @@ export const SORT_BY_LIST = [
         name: 'Trending',
     },
 ]
+export const SEASON_LIST = [
+    {
+        id: 'WINTER',
+        name: 'Winter',
+    },
+    {
+        id: 'SPRING',
+        name: 'Spring',
+    },
+    {
+        id: 'SUMMER',
+        name: 'Summer',
+    },
+    {
+        id: 'FALL',
+        name: 'Fall',
+    },
+]
 
 export const filtersObj: AnimeFilters = {
     sort: 'SCORE_DESC',
     status: null,
     year: null,
+    season: null,
 }

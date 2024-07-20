@@ -2,6 +2,7 @@ export type {
     MediaAnimeDetails,
     SearchAnimeDetails,
     AnimeFilters,
+    AnimeFilter,
 } from '@/types/AnimeTypes'
 export type { MediaMangaDetails } from '@/types/MangaTypes'
 export type { Character } from '@/types/CharacterTypes'
