@@ -31,7 +31,7 @@ export const Overview: FC<OverviewProps> = (props) => {
             ),
             Episodes: animeDetails.episodes,
             Status: capitalizeFirstLetter(animeDetails.status),
-            Duration: `${animeDetails.duration} mins`,
+            Duration: animeDetails.duration && `${animeDetails.duration} mins`,
             Season: `${capitalizeFirstLetter(animeDetails.season)} ${animeDetails.seasonYear}`,
             Studio: getAnimationStudio(animeDetails.studios),
             Characters: createJsxLinks(

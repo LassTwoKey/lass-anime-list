@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Character, Staff, StaffMediaItem } from '@/types'
-import { getFormattedDate } from '@/utils'
+import { getFormattedDate, replaceLinksInText } from '@/utils'
 import { FC } from 'react'
 import { SimpleContentList } from './SimpleContentList'
 
@@ -22,7 +22,11 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
         <div
             className={cn('markdown description', isMarginTop && 'pt-4')}
             dangerouslySetInnerHTML={{
-                __html: currentInfo.description,
+                __html: replaceLinksInText(
+                    currentInfo.description,
+                    'https://anilist.co',
+                    'http://localhost:5173'
+                ),
             }}
         ></div>
     )

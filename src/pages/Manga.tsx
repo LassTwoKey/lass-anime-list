@@ -13,8 +13,9 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { filters } from '@/constants/filters'
 import { ChartItem, ListType } from '@/types'
+
+import { SORT_BY_LIST } from '@/constants/filters'
 
 const GET_MEDIA_LIST = gql`
     query CurrentSeasonList(
@@ -39,6 +40,9 @@ const GET_MEDIA_LIST = gql`
                 genres
                 format
                 description
+                startDate {
+                    year
+                }
             }
         }
     }
@@ -48,7 +52,7 @@ export const Manga = () => {
     const currentType = (localStorage.getItem('mangaType') ??
         'chart') as ListType
     const [type, setType] = useState(currentType)
-    const [filter, setFilter] = useState(filters[0])
+    const [filter, setFilter] = useState(SORT_BY_LIST[0])
 
     const [
         getMangaData,
@@ -133,7 +137,7 @@ export const Manga = () => {
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="start">
-                                        {filters.map((filter) => (
+                                        {SORT_BY_LIST.map((filter) => (
                                             <DropdownMenuItem
                                                 key={filter.id}
                                                 onClick={() =>

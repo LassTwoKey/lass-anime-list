@@ -5,7 +5,7 @@ import {
     STATUS_LIST,
     SEASON_LIST,
     GENRE_LIST,
-} from '../static/filters'
+} from '@/constants/filters'
 import { cn } from '@/lib/utils'
 import { AllFilters, NameFilter, FilterValue } from '@/types'
 import { MultiSelectFilter } from './MultiSelectFilter'

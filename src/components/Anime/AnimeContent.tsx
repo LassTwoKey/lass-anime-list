@@ -5,7 +5,7 @@ import { MediaBlock } from './components/MediaBlock'
 import { useState } from 'react'
 import { ListType } from '@/types'
 import useUpdateMediaByParams from './hooks/useUpdateMediaByParams'
-import { filtersObj } from './static/filters'
+import { filtersObj } from '@/constants/filters'
 
 export const AnimeContent = () => {
     const currentType = (localStorage.getItem('animeType') ??

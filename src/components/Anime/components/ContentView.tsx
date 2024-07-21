@@ -1,9 +1,8 @@
 import { FC, useState } from 'react'
-import Icon from '@mdi/react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { mdiViewGrid, mdiViewList, mdiViewModule } from '@mdi/js'
 import { ListType } from '@/types'
+import { Grid2X2, Grid3X3, TableProperties } from 'lucide-react'
 
 interface ContentViewProps {
     setViewType: React.Dispatch<React.SetStateAction<ListType>>
@@ -36,37 +35,33 @@ export const ContentView: FC<ContentViewProps> = (props) => {
         <div>
             <Button
                 className={cn(
-                    'px-1 hover:text-gray-300 translate-y-[1px]',
+                    'px-2 hover:text-gray-300',
                     type === 'cover' && 'text-white'
                 )}
                 variant="transparent"
                 onClick={selectCoverHanlder}
             >
-                <Icon path={mdiViewModule} size={1.55} />
+                <Grid3X3 />
             </Button>
             <Button
                 className={cn(
-                    'hidden md:inline-block px-1 -translate-y-[5px] hover:text-gray-300',
+                    'hidden md:inline-block px-2 hover:text-gray-300',
                     type === 'chart' && 'text-white'
                 )}
                 variant="transparent"
                 onClick={selectChartHanlder}
             >
-                <Icon
-                    className="translate-x-[1px]"
-                    path={mdiViewGrid}
-                    size={1.12}
-                />
+                <Grid2X2 />
             </Button>
             <Button
                 className={cn(
-                    'px-1 -translate-y-[1px] hover:text-gray-300',
+                    'px-2 hover:text-gray-300',
                     type === 'table' && 'text-white'
                 )}
                 variant="transparent"
                 onClick={selectTableHanlder}
             >
-                <Icon path={mdiViewList} size={1.4} />
+                <TableProperties />
             </Button>
         </div>
     )

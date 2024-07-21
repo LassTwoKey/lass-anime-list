@@ -68,7 +68,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                         <div className="flex gap-2 text-white">
                             <p>{capitalizeFirstLetter(item.format)}</p>
                             <span>/</span>
-                            2024
+                            {item.startDate.year}
                             <span>/</span>
                             <p>{getStringSeparatedByCommas(item.genres)}</p>
                         </div>

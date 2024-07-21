@@ -136,6 +136,6 @@ export const calculateRating = (score: number) => {
 }
 
 export { debounce } from '@/utils/debounce'
-export { createJsxLinks } from '@/utils/linkUtils'
+export { createJsxLinks, replaceLinksInText } from '@/utils/linkUtils'
 export { getDynamicSearchParams } from '@/utils/query'
 export { getObjWithoutEmptyValues } from '@/utils/objects'

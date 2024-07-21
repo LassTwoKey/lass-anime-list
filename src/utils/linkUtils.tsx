@@ -19,3 +19,12 @@ export const createJsxLinks = (
         </>
     )
 }
+
+export const replaceLinksInText = (
+    text: string,
+    originalStr: string,
+    replacementStr: string
+) => {
+    const regex = new RegExp(originalStr, 'g')
+    return text.replace(regex, replacementStr)
+}

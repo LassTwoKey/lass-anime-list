@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { ContentView } from './ContentView'
 import { Filter } from './Filter'
-import { SORT_BY_LIST } from '../static/filters'
+import { SORT_BY_LIST } from '@/constants/filters'
 import { NameFilter, AllFilters, FilterValue, ListType } from '@/types'
 
 interface ActionsProps {

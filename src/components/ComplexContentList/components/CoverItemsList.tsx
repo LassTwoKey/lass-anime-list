@@ -53,7 +53,7 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                             <div className="flex gap-2 text-white">
                                 <p>{capitalizeFirstLetter(item.format)}</p>
                                 <span>/</span>
-                                2024
+                                {item.startDate.year}
                             </div>
                         </div>
                     </HoverCardTrigger>

@@ -13,6 +13,9 @@ export interface ChartItem {
     genres: string[]
     format: string
     description: string
+    startDate: {
+        year: number
+    }
 }
 
 export type ListType = 'cover' | 'chart' | 'table'

@@ -52,6 +52,9 @@ const GET_MEDIA_LIST = gql`
                 genres
                 format
                 description
+                startDate {
+                    year
+                }
             }
         }
     }
