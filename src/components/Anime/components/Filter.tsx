@@ -7,18 +7,18 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
-import { AnimeFilter } from '@/types'
+import { NameFilter, FilterValue } from '@/types'
 
 interface FilterProps {
     title: string
-    name: AnimeFilter
+    name: NameFilter
     list: {
         id: string | number
         name: string | number
     }[]
     value: string | null
-    setCurrentFilter: (name: string, value: string) => void
-    removeCurrentFilter: (name: AnimeFilter) => void
+    setCurrentFilter: (name: NameFilter, value: FilterValue) => void
+    removeCurrentFilter: (name: NameFilter) => void
 }
 
 export const Filter: FC<FilterProps> = (props) => {

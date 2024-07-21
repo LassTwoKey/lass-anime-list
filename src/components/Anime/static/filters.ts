@@ -1,4 +1,4 @@
-import { AnimeFilters } from '@/types'
+import { AllFilters } from '@/types'
 
 export const YEAR_LIST = [
     { id: '2024%', name: 2024 },
@@ -49,10 +49,81 @@ export const SEASON_LIST = [
         name: 'Fall',
     },
 ]
+export const GENRE_LIST = [
+    {
+        id: 'Action',
+        name: 'Action',
+    },
+    {
+        id: 'Adventure',
+        name: 'Adventure',
+    },
+    {
+        id: 'Comedy',
+        name: 'Comedy',
+    },
+    {
+        id: 'Drama',
+        name: 'Drama',
+    },
+    {
+        id: 'Ecchi',
+        name: 'Ecchi',
+    },
+    {
+        id: 'Fantasy',
+        name: 'Fantasy',
+    },
+    {
+        id: 'Hentai',
+        name: 'Hentai',
+    },
+    {
+        id: 'Mahou Shoujo',
+        name: 'Mahou Shoujo',
+    },
+    {
+        id: 'Mecha',
+        name: 'Mecha',
+    },
+    {
+        id: 'Music',
+        name: 'Music',
+    },
+    {
+        id: 'Mystery',
+        name: 'Mystery',
+    },
+    {
+        id: 'Psychological',
+        name: 'Psychological',
+    },
+    {
+        id: 'Sci-Fi',
+        name: 'Sci-Fi',
+    },
+    {
+        id: 'Slice of Life',
+        name: 'Slice of Life',
+    },
+    {
+        id: 'Sports',
+        name: 'Sports',
+    },
+    {
+        id: 'Supernatural',
+        name: 'Supernatural',
+    },
+    {
+        id: 'Thriller',
+        name: 'Thriller',
+    },
+]
 
-export const filtersObj: AnimeFilters = {
+export const filtersObj: AllFilters = {
     sort: 'SCORE_DESC',
     status: null,
     year: null,
     season: null,
+    genres: [],
 }

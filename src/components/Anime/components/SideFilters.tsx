@@ -1,26 +1,41 @@
 import { FC } from 'react'
 import { Filter } from './Filter'
-import { YEAR_LIST, STATUS_LIST, SEASON_LIST } from '../static/filters'
+import {
+    YEAR_LIST,
+    STATUS_LIST,
+    SEASON_LIST,
+    GENRE_LIST,
+} from '../static/filters'
 import { cn } from '@/lib/utils'
-import { AnimeFilters, AnimeFilter } from '@/types'
+import { AllFilters, NameFilter, FilterValue } from '@/types'
+import { MultiSelectFilter } from './MultiSelectFilter'
 
 interface SideFiltersProps {
     className: string
     title: string
-    filters: AnimeFilters
-    setFilters: React.Dispatch<React.SetStateAction<AnimeFilters>>
+    filters: AllFilters
+    setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
 }
 
 export const SideFilters: FC<SideFiltersProps> = (props) => {
     const { className, title, filters, setFilters } = props
 
-    const setCurrentFilter = (name: string, value: string) => {
-        setFilters((prev) => ({
-            ...prev,
-            [name]: value,
-        }))
+    const setCurrentFilter = (name: NameFilter, value: FilterValue) => {
+        if (typeof value === 'string') {
+            setFilters((prev) => ({
+                ...prev,
+                [name]: value,
+            }))
+        }
+
+        if (Array.isArray(value)) {
+            setFilters((prev) => ({
+                ...prev,
+                [name]: value.length === 0 ? null : value,
+            }))
+        }
     }
-    const removeCurrentFilter = (name: AnimeFilter) => {
+    const removeCurrentFilter = (name: NameFilter) => {
         if (!filters[name]) return
 
         setFilters((prev) => ({
@@ -54,6 +69,14 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 name="season"
                 value={filters['season']}
                 list={SEASON_LIST}
+                setCurrentFilter={setCurrentFilter}
+                removeCurrentFilter={removeCurrentFilter}
+            />
+            <MultiSelectFilter
+                title="Genres"
+                name="genres"
+                value={filters['genres']}
+                list={GENRE_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />

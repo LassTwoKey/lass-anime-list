@@ -2,18 +2,18 @@ import { FC } from 'react'
 import { ContentView } from './ContentView'
 import { Filter } from './Filter'
 import { SORT_BY_LIST } from '../static/filters'
-import { AnimeFilters, ListType } from '@/types'
+import { NameFilter, AllFilters, FilterValue, ListType } from '@/types'
 
 interface ActionsProps {
-    filters: AnimeFilters
+    filters: AllFilters
     setType: React.Dispatch<React.SetStateAction<ListType>>
-    setFilters: React.Dispatch<React.SetStateAction<AnimeFilters>>
+    setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
 }
 
 export const Actions: FC<ActionsProps> = (props) => {
     const { filters, setType, setFilters } = props
 
-    const setCurrentFilter = (name: string, value: string) => {
+    const setCurrentFilter = (name: NameFilter, value: FilterValue) => {
         setFilters((prev) => ({
             ...prev,
             [name]: value,

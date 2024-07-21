@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { cn } from '@/lib/utils'
-import { AnimeFilters, ListType } from '@/types'
+import { AllFilters, ListType } from '@/types'
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import useMedia from '../hooks/useMedia'
 
 interface MediaBlockProps {
     className: string
     type: ListType
-    filters: AnimeFilters
+    filters: AllFilters
 }
 
 export const MediaBlock: FC<MediaBlockProps> = (props) => {

@@ -9,6 +9,7 @@ export const GET_MEDIA_LIST = gql`
         $status: MediaStatus
         $year: String
         $season: MediaSeason
+        $genres: [String]
     ) {
         Page(page: $page, perPage: $perPage) {
             media(
@@ -17,6 +18,7 @@ export const GET_MEDIA_LIST = gql`
                 status: $status
                 startDate_like: $year
                 season: $season
+                genre_in: $genres
             ) {
                 id
                 title {
