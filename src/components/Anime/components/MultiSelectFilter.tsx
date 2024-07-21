@@ -123,19 +123,21 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
                         ))}
                     </ul>
                 </ScrollArea>
-                <Button
-                    className="w-full px-2 mt-2"
-                    variant="red"
-                    size="sm"
-                    onClick={() => {
-                        setOpen(false)
-                        setSelected([])
-                        removeCurrentFilter(name)
-                        clearTimeout(timeoutId)
-                    }}
-                >
-                    Clear
-                </Button>
+                <div className="mx-1 mb-1 mt-2">
+                    <Button
+                        className="w-full px-2"
+                        variant="red"
+                        size="sm"
+                        onClick={() => {
+                            setOpen(false)
+                            setSelected([])
+                            removeCurrentFilter(name)
+                            clearTimeout(timeoutId)
+                        }}
+                    >
+                        Clear
+                    </Button>
+                </div>
             </PopoverContent>
         </Popover>
     )
