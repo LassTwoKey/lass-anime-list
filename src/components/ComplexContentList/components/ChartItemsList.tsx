@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { ImageContent } from './ImageContent'
 import {
+    HoverArrow,
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
@@ -52,6 +53,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                             />
                         </HoverCardTrigger>
                         <HoverCardContent side={'right'}>
+                            <HoverArrow width={25} height={15} />
                             <CoverContent item={item} />
                         </HoverCardContent>
                     </HoverCard>

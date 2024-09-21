@@ -4,6 +4,7 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
+    PopoverClose,
 } from '@/components/ui/popover'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
@@ -28,7 +29,7 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
         undefined
     )
-    const [open, setOpen] = useState(false)
+
     const [selected, setSelected] = useState<Filter[]>([])
 
     const setCurrentFilterHandle = (newList: Filter[]) => {
@@ -80,11 +81,10 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
     }, [value])
 
     return (
-        <Popover open={open}>
+        <Popover>
             <PopoverTrigger asChild>
                 <Button
                     ref={triggerRef}
-                    onClick={() => setOpen((prev) => !prev)}
                     className="flex justify-between px-3"
                     variant="outline"
                 >
@@ -96,7 +96,6 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
                 </Button>
             </PopoverTrigger>
             <PopoverContent
-                onInteractOutside={() => setOpen(false)}
                 align="start"
                 className="border-gray-400 border p-0 bg-zinc-800 overflow-hidden"
                 style={{
@@ -124,19 +123,20 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
                     </ul>
                 </ScrollArea>
                 <div className="mx-1 mb-1 mt-2">
-                    <Button
-                        className="w-full px-2"
-                        variant="red"
-                        size="sm"
-                        onClick={() => {
-                            setOpen(false)
-                            setSelected([])
-                            removeCurrentFilter(name)
-                            clearTimeout(timeoutId)
-                        }}
-                    >
-                        Clear
-                    </Button>
+                    <PopoverClose asChild>
+                        <Button
+                            className="w-full px-2"
+                            variant="red"
+                            size="sm"
+                            onClick={() => {
+                                setSelected([])
+                                removeCurrentFilter(name)
+                                clearTimeout(timeoutId)
+                            }}
+                        >
+                            Clear
+                        </Button>
+                    </PopoverClose>
                 </div>
             </PopoverContent>
         </Popover>

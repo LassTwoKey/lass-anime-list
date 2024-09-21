@@ -10,6 +10,7 @@ import {
 import { cn } from '@/lib/utils'
 import { AllFilters, NameFilter, FilterValue } from '@/types'
 import { MultiSelectFilter } from './MultiSelectFilter'
+import { Button } from '@/components/ui/button'
 
 interface SideFiltersProps {
     className?: string
@@ -44,12 +45,29 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
             [name]: null,
         }))
     }
+    const clearAllFIlters = () => {
+        // clear all not for sort
+        Object.keys(filters)
+            .filter((item) => item !== 'sort')
+            .forEach((filterName) => {
+                const value = filterName as NameFilter
+                removeCurrentFilter(value)
+            })
+    }
 
     return (
         <div className={cn('flex flex-col gap-2', className)}>
             {!!title && (
-                <h3 className="text-white font-medium text-xl mb-2">{title}</h3>
+                <h3 className="text-white font-medium text-xl">{title}</h3>
             )}
+
+            <Button
+                variant="transparent"
+                className="text-red-300"
+                onClick={clearAllFIlters}
+            >
+                Clear filters
+            </Button>
 
             <MultiSelectFilter
                 title="Genres"
