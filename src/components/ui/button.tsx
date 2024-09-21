@@ -13,7 +13,7 @@ const buttonVariants = cva(
                     'bg-primary text-primary-foreground focus-visible:bg-primary/90',
                 transparent: 'text-gray-400',
                 outline:
-                    'border border-gray-400 focus-visible:bg-gray-400 focus-visible:text-accent-foreground',
+                    'border border-gray-400 focus-visible:bg-gray-400 text-white focus-visible:text-accent-foreground',
                 secondary:
                     'bg-secondary text-secondary-foreground focus-visible:bg-secondary/80',
                 red: 'bg-red-500 text-white focus-visible:bg-red-600 duration-150',

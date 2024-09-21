@@ -85,7 +85,7 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
                 <Button
                     ref={triggerRef}
                     onClick={() => setOpen((prev) => !prev)}
-                    className="text-white flex justify-between px-3"
+                    className="flex justify-between px-3"
                     variant="outline"
                 >
                     <span className="overflow-hidden text-ellipsis">

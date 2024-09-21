@@ -11,7 +11,7 @@ import { AllFilters, NameFilter, FilterValue } from '@/types'
 import { MultiSelectFilter } from './MultiSelectFilter'
 
 interface SideFiltersProps {
-    className: string
+    className?: string
     title: string
     filters: AllFilters
     setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
@@ -46,8 +46,18 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
 
     return (
         <div className={cn('flex flex-col gap-2', className)}>
-            <h3 className="text-white font-medium text-xl mb-2">{title}</h3>
+            {!!title && (
+                <h3 className="text-white font-medium text-xl mb-2">{title}</h3>
+            )}
 
+            <MultiSelectFilter
+                title="Genres"
+                name="genres"
+                value={filters['genres']}
+                list={GENRE_LIST}
+                setCurrentFilter={setCurrentFilter}
+                removeCurrentFilter={removeCurrentFilter}
+            />
             <Filter
                 title="Year"
                 name="year"
@@ -69,14 +79,6 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 name="season"
                 value={filters['season']}
                 list={SEASON_LIST}
-                setCurrentFilter={setCurrentFilter}
-                removeCurrentFilter={removeCurrentFilter}
-            />
-            <MultiSelectFilter
-                title="Genres"
-                name="genres"
-                value={filters['genres']}
-                list={GENRE_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />
