@@ -5,6 +5,7 @@ import {
     STATUS_LIST,
     SEASON_LIST,
     GENRE_LIST,
+    FORMAT_LIST,
 } from '@/constants/filters'
 import { cn } from '@/lib/utils'
 import { AllFilters, NameFilter, FilterValue } from '@/types'
@@ -79,6 +80,14 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 name="season"
                 value={filters['season']}
                 list={SEASON_LIST}
+                setCurrentFilter={setCurrentFilter}
+                removeCurrentFilter={removeCurrentFilter}
+            />
+            <Filter
+                title="Format"
+                name="format"
+                value={filters['format']}
+                list={FORMAT_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />

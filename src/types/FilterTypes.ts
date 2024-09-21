@@ -5,7 +5,13 @@ export type Filter = {
 
 export type FilterValue = string | unknown[]
 
-export type NameFilter = 'sort' | 'status' | 'year' | 'season' | 'genres'
+export type NameFilter =
+    | 'sort'
+    | 'status'
+    | 'year'
+    | 'season'
+    | 'genres'
+    | 'format'
 
 export interface AllFilters {
     [key: string]: unknown | unknown[]
@@ -14,4 +20,5 @@ export interface AllFilters {
     year: string | null
     season: string | null
     genres: string[]
+    format: string | null
 }

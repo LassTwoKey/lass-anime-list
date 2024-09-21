@@ -119,6 +119,36 @@ export const GENRE_LIST = [
         name: 'Thriller',
     },
 ]
+export const FORMAT_LIST = [
+    {
+        id: 'TV',
+        name: 'TV Show',
+    },
+    {
+        id: 'TV_SHORT',
+        name: 'TV Short',
+    },
+    {
+        id: 'MOVIE',
+        name: 'Movie',
+    },
+    {
+        id: 'SPECIAL',
+        name: 'Special',
+    },
+    {
+        id: 'OVA',
+        name: 'OVA',
+    },
+    {
+        id: 'ONA',
+        name: 'ONA',
+    },
+    {
+        id: 'MUSIC',
+        name: 'Music',
+    },
+]
 
 export const filtersObj: AllFilters = {
     sort: 'SCORE_DESC',
@@ -126,4 +156,5 @@ export const filtersObj: AllFilters = {
     year: null,
     season: null,
     genres: [],
+    format: null,
 }
