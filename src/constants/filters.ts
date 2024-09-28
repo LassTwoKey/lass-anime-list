@@ -1,12 +1,16 @@
 import { AllFilters } from '@/types'
 
-export const YEAR_LIST = [
-    { id: '2024%', name: 2024 },
-    { id: '2023%', name: 2023 },
-    { id: '2022%', name: 2022 },
-    { id: '2021%', name: 2021 },
-    { id: '2020%', name: 2020 },
-]
+const getYearsList = () => {
+    const currentYear = new Date().getFullYear()
+    const yearsArray = []
+
+    for (let year = 1940; year <= currentYear; year++) {
+        yearsArray.push({ id: `${year}%`, name: year })
+    }
+    return yearsArray.reverse()
+}
+
+export const YEAR_LIST = getYearsList()
 export const STATUS_LIST = [
     { id: 'FINISHED', name: 'Finished' },
     { id: 'RELEASING', name: 'Releasing' },

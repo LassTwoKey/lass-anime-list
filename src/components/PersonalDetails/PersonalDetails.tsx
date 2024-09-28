@@ -3,6 +3,7 @@ import { Character, Staff, StaffMediaItem } from '@/types'
 import { getFormattedDate, replaceLinksInText } from '@/utils'
 import { FC } from 'react'
 import { SimpleContentList } from './SimpleContentList'
+import { baseUrl } from '@/constants'
 
 interface PersonalDetailsProps {
     info: Character | Staff
@@ -25,7 +26,7 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
                 __html: replaceLinksInText(
                     currentInfo.description,
                     'https://anilist.co',
-                    'http://localhost:5173'
+                    baseUrl
                 ),
             }}
         ></div>

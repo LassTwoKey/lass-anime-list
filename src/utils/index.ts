@@ -135,6 +135,8 @@ export const calculateRating = (score: number) => {
     return null
 }
 
+export const isProd = import.meta.env.PROD
+
 export { debounce } from '@/utils/debounce'
 export { createJsxLinks, replaceLinksInText } from '@/utils/linkUtils'
 export { getDynamicSearchParams } from '@/utils/query'
