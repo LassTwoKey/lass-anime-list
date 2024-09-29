@@ -3,7 +3,7 @@ export type Filter = {
     name: string
 }
 
-export type FilterValue = string | unknown[]
+export type FilterValue = string | number | unknown[] | null
 
 export type NameFilter =
     | 'sort'
@@ -12,6 +12,12 @@ export type NameFilter =
     | 'season'
     | 'genres'
     | 'format'
+    | 'yearGreater'
+    | 'yearLesser'
+    | 'episodeGreater'
+    | 'episodeLesser'
+    | 'durationGreater'
+    | 'durationLesser'
 
 export interface AllFilters {
     [key: string]: unknown | unknown[]
@@ -21,4 +27,10 @@ export interface AllFilters {
     season: string | null
     genres: string[]
     format: string | null
+    yearGreater: number | null
+    yearLesser: number | null
+    episodeGreater: number | null
+    episodeLesser: number | null
+    durationGreater: number | null
+    durationLesser: number | null
 }

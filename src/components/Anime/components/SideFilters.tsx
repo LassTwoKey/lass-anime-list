@@ -6,11 +6,15 @@ import {
     SEASON_LIST,
     GENRE_LIST,
     FORMAT_LIST,
+    YEAR_RANGE,
+    EPISODE_RANGE,
+    DURATION_RANGE,
 } from '@/constants/filters'
 import { cn } from '@/lib/utils'
 import { AllFilters, NameFilter, FilterValue } from '@/types'
 import { MultiSelectFilter } from './MultiSelectFilter'
 import { Button } from '@/components/ui/button'
+import { RangeFilter } from './RangeFilter'
 
 interface SideFiltersProps {
     className?: string
@@ -109,6 +113,52 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />
+
+            <h3 className="text-white font-medium text-md my-4">
+                Extra filters
+            </h3>
+
+            <div className="grid gap-2">
+                <RangeFilter
+                    title="Year range"
+                    names={['yearGreater', 'yearLesser']}
+                    filterValue={[
+                        filters['yearGreater'],
+                        filters['yearLesser'],
+                    ]}
+                    range={YEAR_RANGE}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                    setCustomValues={(value: number[]) => {
+                        return [`${value[0]}9999`, `${value[1]}0000`]
+                    }}
+                    revertCustomValues={(value: string[]) => {
+                        return [+value[0].slice(0, 4), +value[1].slice(0, 4)]
+                    }}
+                />
+                <RangeFilter
+                    title="Episodes"
+                    names={['episodeGreater', 'episodeLesser']}
+                    filterValue={[
+                        filters['episodeGreater'],
+                        filters['episodeLesser'],
+                    ]}
+                    range={EPISODE_RANGE}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+                <RangeFilter
+                    title="Duration"
+                    names={['durationGreater', 'durationLesser']}
+                    filterValue={[
+                        filters['durationGreater'],
+                        filters['durationLesser'],
+                    ]}
+                    range={DURATION_RANGE}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+            </div>
         </div>
     )
 }

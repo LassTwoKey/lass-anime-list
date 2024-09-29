@@ -154,6 +154,10 @@ export const FORMAT_LIST = [
     },
 ]
 
+export const YEAR_RANGE: [number, number] = [1969, new Date().getFullYear() + 1]
+export const EPISODE_RANGE: [number, number] = [0, 150]
+export const DURATION_RANGE: [number, number] = [0, 170]
+
 export const filtersObj: AllFilters = {
     sort: 'SCORE_DESC',
     status: null,
@@ -161,4 +165,10 @@ export const filtersObj: AllFilters = {
     season: null,
     genres: [],
     format: null,
+    yearGreater: null,
+    yearLesser: null,
+    episodeGreater: null,
+    episodeLesser: null,
+    durationGreater: null,
+    durationLesser: null,
 }

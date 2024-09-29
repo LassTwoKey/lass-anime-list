@@ -11,6 +11,10 @@ export const GET_MEDIA_LIST = gql`
         $season: MediaSeason
         $genres: [String]
         $format: MediaFormat
+        $yearLesser: FuzzyDateInt
+        $yearGreater: FuzzyDateInt
+        $episodeLesser: Int
+        $episodeGreater: Int
     ) {
         Page(page: $page, perPage: $perPage) {
             media(
@@ -21,6 +25,10 @@ export const GET_MEDIA_LIST = gql`
                 season: $season
                 genre_in: $genres
                 format: $format
+                startDate_lesser: $yearLesser
+                startDate_greater: $yearGreater
+                episodes_lesser: $episodeLesser
+                episodes_greater: $episodeGreater
             ) {
                 id
                 title {
