@@ -10,8 +10,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { NameFilter, Filter, FilterValue } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface MultiSelectFilterProps {
+    className?: string
     title: string
     name: NameFilter
     list: Filter[]
@@ -21,8 +23,15 @@ interface MultiSelectFilterProps {
 }
 
 export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
-    const { title, list, name, value, setCurrentFilter, removeCurrentFilter } =
-        props
+    const {
+        className,
+        title,
+        list,
+        name,
+        value,
+        setCurrentFilter,
+        removeCurrentFilter,
+    } = props
 
     const triggerRef = useRef<HTMLButtonElement>(null)
 
@@ -85,7 +94,7 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
             <PopoverTrigger asChild>
                 <Button
                     ref={triggerRef}
-                    className="flex justify-between px-3"
+                    className={cn('flex justify-between px-3', className)}
                     variant="outline"
                 >
                     <span className="overflow-hidden text-ellipsis">

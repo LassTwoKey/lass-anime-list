@@ -2,7 +2,7 @@ import { AllFilters } from '@/types'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-const arrValues = ['genres']
+const arrValues = ['genres', 'licensedBy']
 
 export const useUpdateMediaByParams = (
     filters: AllFilters,
@@ -12,7 +12,7 @@ export const useUpdateMediaByParams = (
 
     // Get all search parameters as an object
     const getAllSearchParams = () => {
-        const params: { [key: string]: string | unknown[] } = {}
+        const params: { [key: string]: string | unknown[] | boolean } = {}
         for (const [key, value] of searchParams.entries()) {
             if (arrValues.includes(key)) {
                 if (value.length === 1) {
@@ -22,6 +22,10 @@ export const useUpdateMediaByParams = (
                 }
             } else {
                 params[key] = value
+            }
+
+            if (params[key] === 'false' || params[key] === 'true') {
+                params[key] = params[key] === 'false' ? false : true
             }
         }
 

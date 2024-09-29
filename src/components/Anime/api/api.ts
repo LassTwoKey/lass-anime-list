@@ -15,6 +15,10 @@ export const GET_MEDIA_LIST = gql`
         $yearGreater: FuzzyDateInt
         $episodeLesser: Int
         $episodeGreater: Int
+        $isAdult: Boolean = false
+        $licensedBy: [Int]
+        $countryOfOrigin: CountryCode
+        $source: MediaSource
     ) {
         Page(page: $page, perPage: $perPage) {
             media(
@@ -29,6 +33,10 @@ export const GET_MEDIA_LIST = gql`
                 startDate_greater: $yearGreater
                 episodes_lesser: $episodeLesser
                 episodes_greater: $episodeGreater
+                isAdult: $isAdult
+                licensedById_in: $licensedBy
+                countryOfOrigin: $countryOfOrigin
+                source: $source
             ) {
                 id
                 title {

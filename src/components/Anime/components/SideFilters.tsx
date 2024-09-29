@@ -9,12 +9,16 @@ import {
     YEAR_RANGE,
     EPISODE_RANGE,
     DURATION_RANGE,
+    LICENSED_BY_LIST,
+    COUNTRY_OF_ORIGIN_LIST,
+    SOURCE_LIST,
 } from '@/constants/filters'
 import { cn } from '@/lib/utils'
 import { AllFilters, NameFilter, FilterValue } from '@/types'
 import { MultiSelectFilter } from './MultiSelectFilter'
 import { Button } from '@/components/ui/button'
 import { RangeFilter } from './RangeFilter'
+import { CheckboxFilter } from './CheckboxFilter'
 
 interface SideFiltersProps {
     className?: string
@@ -28,6 +32,13 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
 
     const setCurrentFilter = (name: NameFilter, value: FilterValue) => {
         if (typeof value === 'string') {
+            setFilters((prev) => ({
+                ...prev,
+                [name]: value,
+            }))
+        }
+
+        if (typeof value === 'boolean') {
             setFilters((prev) => ({
                 ...prev,
                 [name]: value,
@@ -119,6 +130,31 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
             </h3>
 
             <div className="grid gap-2">
+                <Filter
+                    title="Country Of Origin"
+                    name="countryOfOrigin"
+                    value={filters['countryOfOrigin']}
+                    list={COUNTRY_OF_ORIGIN_LIST}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+                <Filter
+                    title="Source Material"
+                    name="source"
+                    value={filters['source']}
+                    list={SOURCE_LIST}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+                <MultiSelectFilter
+                    className="mb-2"
+                    title="Streaming on"
+                    name="licensedBy"
+                    value={filters['licensedBy']}
+                    list={LICENSED_BY_LIST}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
                 <RangeFilter
                     title="Year range"
                     names={['yearGreater', 'yearLesser']}
@@ -155,6 +191,13 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                         filters['durationLesser'],
                     ]}
                     range={DURATION_RANGE}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+                <CheckboxFilter
+                    title="Adult content"
+                    name="isAdult"
+                    value={filters['isAdult']}
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
                 />

@@ -76,7 +76,9 @@ export const RangeFilter: FC<RangeFilterProps> = (props) => {
     return (
         <div>
             <div className="flex gap-2 justify-between items-center">
-                <p className="text-white font-medium mb-2">{title}</p>
+                <p className="text-gray-400 text-sm font-medium mb-3">
+                    {title}
+                </p>
                 {!isDefaultValue && (
                     <p className="flex gap-1 items-center text-gray-400">
                         <span className="text-sm">
