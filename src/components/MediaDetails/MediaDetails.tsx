@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeft } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
 import notFoundImage from '@/assets/images/not-found.png'
@@ -14,6 +16,14 @@ interface MediaDetailsProps {
 export const MediaDetails: FC<MediaDetailsProps> = (props) => {
     const { mediaDetails } = props
 
+    const navigate = useNavigate()
+    const isGoBack = window.history.state && window.history.state.idx > 0
+    const handleGoBack = () => {
+        if (isGoBack) {
+            navigate(-1)
+        }
+    }
+
     const description = (
         <p
             dangerouslySetInnerHTML={{
@@ -25,6 +35,20 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
     return (
         <div className="text-gray-400 text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full">
+                {isGoBack && (
+                    <div className="absolute left-0 top-12 flex items-center h-8 md:h-12 z-10 w-28 bg-gradient-to-r from-neutral-900 opacity-95">
+                        <span
+                            className="flex gap-1 h-full items-center cursor-pointer"
+                            onClick={handleGoBack}
+                        >
+                            <ChevronLeft
+                                className="translate-y-0.5"
+                                size={18}
+                            />{' '}
+                            Back
+                        </span>
+                    </div>
+                )}
                 <img
                     className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                     src={mediaDetails.bannerImage || notFoundImage}
