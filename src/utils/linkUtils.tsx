@@ -1,4 +1,10 @@
 import { Link } from 'react-router-dom'
+import parse, { domToReact } from 'html-react-parser'
+import type {
+    HTMLReactParserOptions,
+    Element,
+    DOMNode,
+} from 'html-react-parser'
 
 export const createJsxLinks = (
     arr: { id: number; content: string }[],
@@ -20,11 +26,31 @@ export const createJsxLinks = (
     )
 }
 
-export const replaceLinksInText = (
+export const parseWithLinks = (
     text: string,
-    originalStr: string,
-    replacementStr: string
+    originalStr?: string,
+    replacementStr: string = ''
 ) => {
-    const regex = new RegExp(originalStr, 'g')
-    return text.replace(regex, replacementStr)
+    let editedText = text
+
+    if (originalStr) {
+        const regex = new RegExp(originalStr, 'g')
+        editedText = text.replace(regex, replacementStr)
+    }
+
+    const options: HTMLReactParserOptions = {
+        replace: (domNode) => {
+            if (
+                domNode.type === 'tag' &&
+                (domNode as Element).name === 'a' &&
+                (domNode as Element).attribs.href
+            ) {
+                const { href } = (domNode as Element).attribs
+                const children = (domNode as Element).children as DOMNode[]
+                return <Link to={href}>{domToReact(children, options)}</Link>
+            }
+        },
+    }
+
+    return parse(editedText, options)
 }

@@ -138,6 +138,6 @@ export const calculateRating = (score: number) => {
 export const isProd = import.meta.env.PROD
 
 export { debounce } from '@/utils/debounce'
-export { createJsxLinks, replaceLinksInText } from '@/utils/linkUtils'
+export { createJsxLinks, parseWithLinks } from '@/utils/linkUtils'
 export { getDynamicSearchParams } from '@/utils/query'
 export { getObjWithoutEmptyValues } from '@/utils/objects'

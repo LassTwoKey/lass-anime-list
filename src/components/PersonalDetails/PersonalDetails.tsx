@@ -2,10 +2,9 @@ import { useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { ChevronLeft } from 'lucide-react'
 import { Character, Staff, StaffMediaItem } from '@/types'
-import { getFormattedDate, replaceLinksInText } from '@/utils'
+import { getFormattedDate, parseWithLinks } from '@/utils'
 import { FC } from 'react'
 import { SimpleContentList } from './SimpleContentList'
-import { baseUrl } from '@/constants'
 
 interface PersonalDetailsProps {
     info: Character | Staff
@@ -30,16 +29,9 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
     const isMarginTop = !currentInfo.description.includes('<p><strong>')
 
     const description = (
-        <div
-            className={cn('markdown description', isMarginTop && 'pt-4')}
-            dangerouslySetInnerHTML={{
-                __html: replaceLinksInText(
-                    currentInfo.description,
-                    'https://anilist.co',
-                    baseUrl
-                ),
-            }}
-        ></div>
+        <div className={cn('markdown description', isMarginTop && 'pt-4')}>
+            {parseWithLinks(currentInfo.description, 'https://anilist.co', '')}
+        </div>
     )
 
     const personInfo = {
