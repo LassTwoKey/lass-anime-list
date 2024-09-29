@@ -48,7 +48,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             'Start Date': getFormattedDate(mangaDetails.startDate),
             'End Date': getFormattedDate(mangaDetails.endDate),
             Genres: getStringSeparatedByCommas(mangaDetails.genres),
-            Source: capitalizeFirstLetter(mangaDetails.source),
+            Source: capitalizeFirstLetter(mangaDetails.source).replace(
+                '_',
+                ' '
+            ),
             Status: capitalizeFirstLetter(mangaDetails.status),
             Characters: createJsxLinks(
                 getCharactersName(mangaDetails.characters),

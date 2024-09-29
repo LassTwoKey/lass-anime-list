@@ -68,6 +68,8 @@ export const RangeFilter: FC<RangeFilterProps> = (props) => {
             } else {
                 setValue([filterValue[0] as number, filterValue[1] as number])
             }
+        } else {
+            setValue(range)
         }
     }, [filterValue[0], filterValue[1]])
 

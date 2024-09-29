@@ -1,5 +1,3 @@
-import { CharactersEdge, StudiosEdge } from '@/types'
-
 export const capitalizeFirstLetter = (word: string) => {
     if (!word) return ''
     return word[0].toUpperCase() + word.slice(1).toLowerCase()
@@ -69,74 +67,14 @@ export const getFormattedDate = (args: {
     return null
 }
 
-export const getAnimationStudio = (studios: { edges: StudiosEdge[] }) => {
-    return capitalizeFirstLetter(
-        studios.edges.find((studio) => studio.node.isAnimationStudio)?.node
-            .name || ''
-    )
-}
-
-export const getCharactersName = (characters: { edges: CharactersEdge[] }) => {
-    return characters.edges.map((character) => ({
-        content: character.node.name.userPreferred,
-        id: character.node.id,
-    }))
-}
-
-export const getCurrentSeason = () => {
-    const currentDate = new Date()
-    const currentMonth = currentDate.getMonth()
-
-    let currentSeason = null
-    let prevSeason = null
-
-    switch (currentMonth) {
-        case 0:
-        case 1:
-        case 11:
-            currentSeason = 'WINTER'
-            prevSeason = 'FALL'
-            break
-        case 2:
-        case 3:
-        case 4:
-            currentSeason = 'SPRING'
-            prevSeason = 'WINTER'
-            break
-        case 5:
-        case 6:
-        case 7:
-            currentSeason = 'SUMMER'
-            prevSeason = 'SPRING'
-            break
-        case 8:
-        case 9:
-        case 10:
-            currentSeason = 'FALL'
-            prevSeason = 'SUMMER'
-            break
-        default:
-            currentSeason = `Can't determine the time of year`
-            prevSeason = `Can't determine the time of year`
-    }
-
-    return {
-        year: currentDate.getFullYear(),
-        currentSeason,
-        prevSeason,
-    }
-}
-
-export const calculateRating = (score: number) => {
-    if (typeof score === 'number') {
-        return (score / 10).toFixed(1)
-    }
-
-    return null
-}
-
 export const isProd = import.meta.env.PROD
 
+export {
+    getAnimationStudio,
+    getCharactersName,
+    getCurrentSeason,
+    calculateRating,
+} from '@/utils/media'
 export { debounce } from '@/utils/debounce'
 export { createJsxLinks, parseWithLinks } from '@/utils/linkUtils'
 export { getDynamicSearchParams } from '@/utils/query'

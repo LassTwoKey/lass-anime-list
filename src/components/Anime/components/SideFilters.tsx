@@ -60,7 +60,7 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
             [name]: null,
         }))
     }
-    const clearAllFIlters = () => {
+    const clearAllFilters = () => {
         // clear all not for sort
         Object.keys(filters)
             .filter((item) => item !== 'sort')
@@ -79,7 +79,7 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
             <Button
                 variant="transparent"
                 className="text-red-300"
-                onClick={clearAllFIlters}
+                onClick={clearAllFilters}
             >
                 Clear filters
             </Button>

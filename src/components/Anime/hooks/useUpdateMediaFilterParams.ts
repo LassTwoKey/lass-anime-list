@@ -4,33 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 
 const arrValues = ['genres', 'licensedBy']
 
-export const useUpdateMediaByParams = (
-    filters: AllFilters,
-    setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
-) => {
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    // Get all search parameters as an object
-    const getAllSearchParams = () => {
-        const params: { [key: string]: string | unknown[] | boolean } = {}
-        for (const [key, value] of searchParams.entries()) {
-            if (arrValues.includes(key)) {
-                if (value.length === 1) {
-                    params[key] = [value]
-                } else {
-                    params[key] = value.split(',')
-                }
-            } else {
-                params[key] = value
-            }
-
-            if (params[key] === 'false' || params[key] === 'true') {
-                params[key] = params[key] === 'false' ? false : true
-            }
-        }
-
-        return params
-    }
+export const useUpdateMediaFilterParams = (filters: AllFilters) => {
+    const [, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         const notEmptyParams: Record<string, string> = {}
@@ -58,15 +33,7 @@ export const useUpdateMediaByParams = (
         setSearchParams(params)
     }, [filters, setSearchParams])
 
-    useEffect(() => {
-        const currentFilters = getAllSearchParams()
-        setFilters((prev) => ({
-            ...prev,
-            ...currentFilters,
-        }))
-    }, [])
-
     return {}
 }
 
-export default useUpdateMediaByParams
+export default useUpdateMediaFilterParams

@@ -4,7 +4,8 @@ import { SideFilters } from './components/SideFilters'
 import { MediaBlock } from './components/MediaBlock'
 import { useState } from 'react'
 import { ListType } from '@/types'
-import useUpdateMediaByParams from './hooks/useUpdateMediaByParams'
+import useUpdateMediaFilterParams from './hooks/useUpdateMediaFilterParams'
+import useMediaFilters from './hooks/useMediaFilters'
 import { filtersObj } from '@/constants/filters'
 import {
     Drawer,
@@ -21,9 +22,10 @@ export const AnimeContent = () => {
         'chart') as ListType
 
     const [type, setType] = useState(currentType)
-    const [filters, setFilters] = useState(filtersObj)
+    const savedFilters = useMediaFilters(filtersObj)
+    const [filters, setFilters] = useState(savedFilters)
 
-    useUpdateMediaByParams(filters, setFilters)
+    useUpdateMediaFilterParams(filters)
 
     return (
         <div className="pt-12 container mx-auto px-4">

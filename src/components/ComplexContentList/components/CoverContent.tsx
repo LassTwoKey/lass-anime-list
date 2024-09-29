@@ -10,6 +10,7 @@ import {
     maxLength,
 } from '@/utils'
 import { cn } from '@/lib/utils'
+import { Link } from 'react-router-dom'
 
 const GET_ANIME_INFO = gql`
     query GetItemInfo($id: Int) {
@@ -57,29 +58,18 @@ interface CoverContentProps {
 export const CoverContent: FC<CoverContentProps> = (props) => {
     const { item } = props
 
-    const {
-        loading: loadingAnime,
-        error: errorAnime,
-        data: dataAnime,
-    } = useQuery(GET_ANIME_INFO, {
-        variables: {
-            id: item.id,
-        },
-    })
-
-    const {
-        loading: loadingManga,
-        error: errorManga,
-        data: dataManga,
-    } = useQuery(GET_MANGA_INFO, {
-        variables: {
-            id: item.id,
-        },
-    })
+    const { loading, error, data } = useQuery(
+        item.type === 'ANIME' ? GET_ANIME_INFO : GET_MANGA_INFO,
+        {
+            variables: {
+                id: item.id,
+            },
+        }
+    )
 
     const [isShowText, setIsShowText] = useState(false)
 
-    if (loadingAnime || loadingManga) {
+    if (loading) {
         return (
             <div className="flex justify-center min-h-14 py-4">
                 <span className="loader-1"></span>
@@ -87,7 +77,7 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
         )
     }
 
-    if (errorAnime || errorManga) {
+    if (error) {
         return (
             <div className="text-red-500 font-medium flex justify-center max-h-24 py-4">
                 <p className="text-lg">Error in loading</p>
@@ -100,21 +90,21 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
     if (item.type === 'ANIME') {
         itemInfo = {
             Type: capitalizeFirstLetter(item.type),
-            'Start Date': getFormattedDate(dataAnime.Media.startDate),
-            'End Date': getFormattedDate(dataAnime.Media.endDate),
+            'Start Date': getFormattedDate(data.Media.startDate),
+            'End Date': getFormattedDate(data.Media.endDate),
             Genres: getStringSeparatedByCommas(item.genres),
-            Source: capitalizeFirstLetter(dataAnime.Media.source),
-            Episodes: dataAnime.Media.episodes,
-            Status: capitalizeFirstLetter(dataAnime.Media.status),
-            Duration: `${dataAnime.Media.duration} mins`,
+            Source: capitalizeFirstLetter(data.Media.source).replace('_', ' '),
+            Episodes: data.Media.episodes,
+            Status: capitalizeFirstLetter(data.Media.status),
+            Duration: `${data.Media.duration} mins`,
         }
     } else {
         itemInfo = {
             Type: capitalizeFirstLetter(item.type),
-            'Start Date': getFormattedDate(dataManga.Media.startDate),
-            'End Date': getFormattedDate(dataManga.Media.endDate),
+            'Start Date': getFormattedDate(data.Media.startDate),
+            'End Date': getFormattedDate(data.Media.endDate),
             Genres: getStringSeparatedByCommas(item.genres),
-            Status: capitalizeFirstLetter(dataManga.Media.status),
+            Status: capitalizeFirstLetter(data.Media.status),
         }
     }
 
@@ -128,10 +118,18 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
         }
     }
 
+    const getToUrl = (item: ChartItem) => {
+        return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
+    }
+
     return (
         <div className="divide-y divide-neutral-700 text-sm lg:text-base">
             <div className="pb-4">
-                <h3 className="text-green-500 text-xl">{item.title.romaji}</h3>
+                <Link to={getToUrl(item)}>
+                    <h3 className="inline-block overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
+                        {item.title.romaji}
+                    </h3>
+                </Link>
                 <p className="text-gray-400">{item.title.native}</p>
             </div>
             <div className={cn('text-gray-400', !!item.description && 'pt-4')}>

@@ -22,7 +22,7 @@ const useMedia = (filters: AllFilters) => {
         await getMediaData({
             variables: {
                 page: page + 1,
-                perPage: 10,
+                perPage: 15,
                 type: 'ANIME',
                 ...filtersToServer,
             },
@@ -38,7 +38,7 @@ const useMedia = (filters: AllFilters) => {
         getMediaData({
             variables: {
                 page: 1,
-                perPage: 10,
+                perPage: 15,
                 type: 'ANIME',
                 ...filtersToServer,
             },
