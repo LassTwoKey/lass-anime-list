@@ -63,7 +63,7 @@ export const SearchList: FC<SearchListProps> = (props) => {
                             <span className="flex gap-2 text-white">
                                 <p>{capitalizeFirstLetter(item.format)}</p>
                                 <span>/</span>
-                                2024
+                                {item.startDate.year}
                             </span>
                         </span>
                     </div>

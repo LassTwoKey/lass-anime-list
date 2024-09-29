@@ -51,4 +51,7 @@ export interface SearchAnimeDetails {
     meanScore: number
     type: 'ANIME'
     format: string
+    startDate: {
+        year: number
+    }
 }

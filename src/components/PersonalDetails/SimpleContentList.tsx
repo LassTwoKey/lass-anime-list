@@ -25,7 +25,7 @@ export const SimpleContentList: FC<SimpleContentListProps> = (props) => {
                         className="flex flex-col pb-[134%] relative w-full lg:flex-row bg-neutral-900 rounded-lg"
                     >
                         <img
-                            className="absolute left-0 top-0 w-full h-full object-cover rounded-l-lg overflow-hidden"
+                            className="absolute left-0 top-0 w-full h-full object-cover rounded-lg overflow-hidden"
                             src={item.coverImage.large}
                             alt=""
                         />

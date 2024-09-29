@@ -37,6 +37,9 @@ const GET_MEDIA_LIST = gql`
                 meanScore
                 type
                 format
+                startDate {
+                    year
+                }
             }
         }
     }
