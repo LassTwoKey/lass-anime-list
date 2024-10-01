@@ -7,33 +7,114 @@ import {
     getStringSeparatedByCommas,
 } from '@/utils'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
-import { Link } from 'react-router-dom'
+import { StyledLink } from '@/ui/StyledLink'
 
 interface OverviewProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
+}
+
+interface ValueObject {
+    season?: string
+    year?: number
+    genres?: string[]
 }
 
 export const Overview: FC<OverviewProps> = (props) => {
     const { mediaDetails } = props
 
     let mediaInfo = null
+    const mediaType = mediaDetails.type.toLowerCase()
+
+    const getFilterLink = (
+        value: string,
+        filterName: string,
+        values?: ValueObject
+    ) => {
+        switch (filterName) {
+            case 'type':
+                return <StyledLink to={`/${mediaType}`}>{value}</StyledLink>
+            case 'status':
+                return (
+                    <StyledLink
+                        to={`/${mediaType}?status=${value.toUpperCase()}`}
+                    >
+                        {value}
+                    </StyledLink>
+                )
+            case 'season':
+                return (
+                    <StyledLink
+                        to={`/${mediaType}?season=${values?.season}&year=${values?.year}%`}
+                    >
+                        {value}
+                    </StyledLink>
+                )
+            case 'studio':
+                return (
+                    <StyledLink
+                        to={
+                            mediaDetails.type === 'ANIME'
+                                ? `/studio/${mediaDetails.studios.edges[0].node.id}/${mediaDetails.studios.edges[0].node.name}`
+                                : ''
+                        }
+                    >
+                        {value}
+                    </StyledLink>
+                )
+            case 'genres':
+                if (!values?.genres?.length) return ''
+
+                return values?.genres?.map((genre, index) => (
+                    <span key={genre}>
+                        <StyledLink to={`/${mediaType}?genres=${genre}`}>
+                            {genre}
+                        </StyledLink>
+                        {values.genres?.length - 1 !== index ? ', ' : ''}
+                    </span>
+                ))
+            default:
+                return ''
+        }
+    }
 
     if (mediaDetails.type === 'ANIME') {
         const animeDetails = mediaDetails as MediaAnimeDetails
         mediaInfo = {
-            Type: capitalizeFirstLetter(animeDetails.type),
+            Type: getFilterLink(
+                capitalizeFirstLetter(animeDetails.type),
+                'type'
+            ),
             'Start Date': getFormattedDate(animeDetails.startDate),
             'End Date': getFormattedDate(animeDetails.endDate),
-            Genres: getStringSeparatedByCommas(animeDetails.genres),
+            Genres: getFilterLink(
+                getStringSeparatedByCommas(animeDetails.genres),
+                'genres',
+                {
+                    genres: animeDetails.genres,
+                }
+            ),
             Source: capitalizeFirstLetter(animeDetails.source).replace(
                 '_',
                 ' '
             ),
             Episodes: animeDetails.episodes,
-            Status: capitalizeFirstLetter(animeDetails.status),
+            Status: getFilterLink(
+                capitalizeFirstLetter(animeDetails.status),
+                'status'
+            ),
             Duration: animeDetails.duration && `${animeDetails.duration} mins`,
-            Season: `${capitalizeFirstLetter(animeDetails.season)} ${animeDetails.seasonYear}`,
-            Studio: mediaDetails.studios.edges[0].node.name,
+            Season: getFilterLink(
+                `${capitalizeFirstLetter(animeDetails.season)} ${animeDetails.seasonYear}`,
+                'season',
+                {
+                    season: animeDetails.season,
+                    year: animeDetails.seasonYear,
+                }
+            ),
+            Studio: getFilterLink(
+                mediaDetails.studios.edges[0].node.name,
+                'studio'
+            ),
             Characters: createJsxLinks(
                 getCharactersName(animeDetails.characters),
                 '/character'
@@ -44,15 +125,27 @@ export const Overview: FC<OverviewProps> = (props) => {
     if (mediaDetails.type === 'MANGA') {
         const mangaDetails = mediaDetails as MediaMangaDetails
         mediaInfo = {
-            Type: capitalizeFirstLetter(mangaDetails.type),
+            Type: getFilterLink(
+                capitalizeFirstLetter(mangaDetails.type),
+                'type'
+            ),
             'Start Date': getFormattedDate(mangaDetails.startDate),
             'End Date': getFormattedDate(mangaDetails.endDate),
-            Genres: getStringSeparatedByCommas(mangaDetails.genres),
+            Genres: getFilterLink(
+                getStringSeparatedByCommas(mangaDetails.genres),
+                'genres',
+                {
+                    genres: mangaDetails.genres,
+                }
+            ),
             Source: capitalizeFirstLetter(mangaDetails.source).replace(
                 '_',
                 ' '
             ),
-            Status: capitalizeFirstLetter(mangaDetails.status),
+            Status: getFilterLink(
+                capitalizeFirstLetter(mangaDetails.status),
+                'status'
+            ),
             Characters: createJsxLinks(
                 getCharactersName(mangaDetails.characters),
                 '/character'
@@ -73,10 +166,6 @@ export const Overview: FC<OverviewProps> = (props) => {
         }
     }
 
-    const studioLink =
-        mediaDetails.type === 'ANIME' &&
-        `/studio/${mediaDetails.studios.edges[0].node.id}/${mediaDetails.studios.edges[0].node.name}`
-
     return (
         <div>
             <div className="mt-4 flex flex-col gap-3">
@@ -87,20 +176,6 @@ export const Overview: FC<OverviewProps> = (props) => {
                     </div>
                 ))}
             </div>
-            <h2 className="text-lg lg:text-2xl font-medium my-3">Additional</h2>
-            {studioLink && (
-                <div>
-                    <div>
-                        <span className="font-medium">Studios:</span>{' '}
-                        <Link
-                            to={studioLink}
-                            className="text-green-500 hover:text-green-600 hover:underline duration-150"
-                        >
-                            {mediaDetails.studios.edges[0].node.name}
-                        </Link>
-                    </div>
-                </div>
-            )}
         </div>
     )
 }
