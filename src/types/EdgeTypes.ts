@@ -3,7 +3,7 @@ import { Character, Stuff } from '@/types'
 export interface StudiosEdge {
     node: {
         name: string
-        isAnimationStudio: boolean
+        id: number
     }
 }
 

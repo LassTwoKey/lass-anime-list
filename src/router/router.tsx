@@ -7,6 +7,7 @@ import { AnimeDetails } from '@/pages/AnimeDetails'
 import { MangaDetails } from '@/pages/MangaDetails'
 import { CharacterDetails } from '@/pages/CharacterDetails'
 import { StaffDetails } from '@/pages/StaffDetails'
+import { StudioDetails } from '@/pages/StudioDetails'
 
 const routes = [
     {
@@ -58,6 +59,16 @@ const routes = [
             {
                 path: ':staffName',
                 element: <StaffDetails />,
+            },
+        ],
+    },
+    {
+        path: '/studio/:studioId',
+        element: <StudioDetails />,
+        children: [
+            {
+                path: ':studioName',
+                element: <StudioDetails />,
             },
         ],
     },

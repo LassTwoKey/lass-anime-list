@@ -1,10 +1,9 @@
-import { useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { ChevronLeft } from 'lucide-react'
 import { Character, Staff, StaffMediaItem } from '@/types'
 import { getFormattedDate, parseWithLinks } from '@/utils'
 import { FC } from 'react'
 import { SimpleContentList } from './SimpleContentList'
+import { GoBack } from '@/ui/GoBack'
 
 interface PersonalDetailsProps {
     info: Character | Staff
@@ -15,14 +14,6 @@ interface CurrentInfo extends Character, Staff {}
 
 export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
     const { info, list } = props
-
-    const navigate = useNavigate()
-    const isGoBack = window.history.state && window.history.state.idx > 0
-    const handleGoBack = () => {
-        if (isGoBack) {
-            navigate(-1)
-        }
-    }
 
     const currentInfo = info as CurrentInfo
 
@@ -79,20 +70,7 @@ export const PersonalDetails: FC<PersonalDetailsProps> = (props) => {
     return (
         <div className="text-gray-400 bg-neutral-900 h-full text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full bg-indigo-950">
-                {isGoBack && (
-                    <div className="absolute left-0 top-12 flex items-center h-8 md:h-12 z-10 w-28 bg-gradient-to-r from-neutral-900 opacity-95">
-                        <span
-                            className="flex gap-1 h-full items-center cursor-pointer"
-                            onClick={handleGoBack}
-                        >
-                            <ChevronLeft
-                                className="translate-y-0.5"
-                                size={18}
-                            />{' '}
-                            Back
-                        </span>
-                    </div>
-                )}
+                <GoBack />
             </div>
             <div>
                 <div className="container mx-auto flex px-4 -mb-4 lg:mb-0">

@@ -18,6 +18,8 @@ const GET_ANIME = gql`
             }
             bannerImage
             meanScore
+            popularity
+            favourites
             type
             genres
             format
@@ -38,11 +40,11 @@ const GET_ANIME = gql`
             }
             season
             seasonYear
-            studios {
+            studios(isMain: true) {
                 edges {
                     node {
                         name
-                        isAnimationStudio
+                        id
                     }
                 }
             }

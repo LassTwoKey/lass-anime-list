@@ -1,6 +1,4 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ChevronLeft } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
 import notFoundImage from '@/assets/images/not-found.png'
@@ -8,6 +6,8 @@ import { Overview } from './components/Overview'
 import { Characters } from './components/Characters'
 import { Stuff } from './components/Stuff'
 import { Stats } from './components/Stats'
+import { ScoreBadge } from '@/ui/ScoreBadge'
+import { GoBack } from '@/ui/GoBack'
 
 interface MediaDetailsProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
@@ -15,14 +15,6 @@ interface MediaDetailsProps {
 
 export const MediaDetails: FC<MediaDetailsProps> = (props) => {
     const { mediaDetails } = props
-
-    const navigate = useNavigate()
-    const isGoBack = window.history.state && window.history.state.idx > 0
-    const handleGoBack = () => {
-        if (isGoBack) {
-            navigate(-1)
-        }
-    }
 
     const description = (
         <p
@@ -35,20 +27,7 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
     return (
         <div className="text-gray-400 text-sm lg:text-base">
             <div className="relative min-h-40 lg:min-h-96 w-full">
-                {isGoBack && (
-                    <div className="absolute left-0 top-12 flex items-center h-8 md:h-12 z-10 w-28 bg-gradient-to-r from-neutral-900 opacity-95">
-                        <span
-                            className="flex gap-1 h-full items-center cursor-pointer"
-                            onClick={handleGoBack}
-                        >
-                            <ChevronLeft
-                                className="translate-y-0.5"
-                                size={18}
-                            />{' '}
-                            Back
-                        </span>
-                    </div>
-                )}
+                <GoBack />
                 <img
                     className="absolute left-0 top-0 w-full h-full object-cover pointer-events-none select-none"
                     src={mediaDetails.bannerImage || notFoundImage}
@@ -65,15 +44,38 @@ export const MediaDetails: FC<MediaDetailsProps> = (props) => {
                         />
                     </div>
                     <div className="py-4 pl-2 lg:pl-2 lg:py-5">
-                        <h1 className="text-lg lg:text-2xl font-medium mb-3 text-white">
+                        <div className="mt-4 lg:mb-4 flex items-center gap-4 text-center">
+                            <ScoreBadge value={mediaDetails.meanScore} />
+                            <div className="font-medium">
+                                <span>Popularity:</span>{' '}
+                                <span className="text-white">
+                                    {mediaDetails.popularity.toLocaleString()}
+                                </span>
+                            </div>
+                            <div className="font-medium">
+                                <span>Favorites:</span>{' '}
+                                <span className="text-white">
+                                    {mediaDetails.favourites.toLocaleString()}
+                                </span>
+                            </div>
+                        </div>
+                        <h1 className="hidden lg:block text-lg lg:text-2xl font-medium mb-3 text-white">
                             {mediaDetails.title.romaji}
                         </h1>
-                        <h2 className="mb-3">{mediaDetails.title.native}</h2>
+                        <h2 className="hidden lg:block mb-3">
+                            {mediaDetails.title.native}
+                        </h2>
                         <div className="hidden lg:block">{description}</div>
                     </div>
                 </div>
+
                 <div className="container mx-auto pb-4 px-4 block lg:hidden">
-                    {description}
+                    <h1 className="text-lg lg:text-2xl font-medium mb-3 text-white">
+                        {mediaDetails.title.romaji}
+                    </h1>
+                    <h2 className="mb-3">{mediaDetails.title.native}</h2>
+                    <div className="hidden lg:block">{description}</div>
+                    <div>{description}</div>
                 </div>
             </div>
             <div className="container mx-auto flex px-4 pb-8 gap-4">

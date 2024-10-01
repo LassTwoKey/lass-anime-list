@@ -70,7 +70,6 @@ export const getFormattedDate = (args: {
 export const isProd = import.meta.env.PROD
 
 export {
-    getAnimationStudio,
     getCharactersName,
     getCurrentSeason,
     calculateRating,

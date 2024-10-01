@@ -2,12 +2,12 @@ import { FC } from 'react'
 import {
     capitalizeFirstLetter,
     createJsxLinks,
-    getAnimationStudio,
     getCharactersName,
     getFormattedDate,
     getStringSeparatedByCommas,
 } from '@/utils'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
+import { Link } from 'react-router-dom'
 
 interface OverviewProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
@@ -33,7 +33,7 @@ export const Overview: FC<OverviewProps> = (props) => {
             Status: capitalizeFirstLetter(animeDetails.status),
             Duration: animeDetails.duration && `${animeDetails.duration} mins`,
             Season: `${capitalizeFirstLetter(animeDetails.season)} ${animeDetails.seasonYear}`,
-            Studio: getAnimationStudio(animeDetails.studios),
+            Studio: mediaDetails.studios.edges[0].node.name,
             Characters: createJsxLinks(
                 getCharactersName(animeDetails.characters),
                 '/character'
@@ -73,6 +73,10 @@ export const Overview: FC<OverviewProps> = (props) => {
         }
     }
 
+    const studioLink =
+        mediaDetails.type === 'ANIME' &&
+        `/studio/${mediaDetails.studios.edges[0].node.id}/${mediaDetails.studios.edges[0].node.name}`
+
     return (
         <div>
             <div className="mt-4 flex flex-col gap-3">
@@ -83,6 +87,20 @@ export const Overview: FC<OverviewProps> = (props) => {
                     </div>
                 ))}
             </div>
+            <h2 className="text-lg lg:text-2xl font-medium my-3">Additional</h2>
+            {studioLink && (
+                <div>
+                    <div>
+                        <span className="font-medium">Studios:</span>{' '}
+                        <Link
+                            to={studioLink}
+                            className="text-green-500 hover:text-green-600 hover:underline duration-150"
+                        >
+                            {mediaDetails.studios.edges[0].node.name}
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

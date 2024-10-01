@@ -1,6 +1,7 @@
 import { StaffMediaItem } from '@/types'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { ScoreBadge } from '@/ui/ScoreBadge'
 
 interface ListType extends StaffMediaItem {
     uniqueId?: number
@@ -29,6 +30,7 @@ export const SimpleContentList: FC<SimpleContentListProps> = (props) => {
                             src={item.coverImage.large}
                             alt=""
                         />
+                        <ScoreBadge value={item.meanScore} isAbsolute />
                     </Link>
                     <div>
                         <Link to={getToUrl(item)}>

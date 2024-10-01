@@ -1,12 +1,4 @@
-import { CharactersEdge, StudiosEdge } from '@/types'
-import { capitalizeFirstLetter } from '@/utils'
-
-export const getAnimationStudio = (studios: { edges: StudiosEdge[] }) => {
-    return capitalizeFirstLetter(
-        studios.edges.find((studio) => studio.node.isAnimationStudio)?.node
-            .name || ''
-    )
-}
+import { CharactersEdge } from '@/types'
 
 export const getCharactersName = (characters: { edges: CharactersEdge[] }) => {
     return characters.edges.map((character) => ({

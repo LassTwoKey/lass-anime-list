@@ -18,6 +18,8 @@ const GET_MANGA = gql`
             }
             bannerImage
             meanScore
+            popularity
+            favourites
             type
             genres
             format

@@ -11,6 +11,8 @@ export interface MediaAnimeDetails {
     }
     bannerImage: string
     meanScore: number
+    popularity: number
+    favourites: number
     type: 'ANIME'
     genres: string[]
     format: string

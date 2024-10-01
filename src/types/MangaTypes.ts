@@ -11,6 +11,8 @@ export interface MediaMangaDetails {
     }
     bannerImage: string
     meanScore: number
+    popularity: number
+    favourites: number
     type: 'MANGA'
     genres: string[]
     format: string
