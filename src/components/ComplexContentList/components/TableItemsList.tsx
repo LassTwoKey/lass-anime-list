@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ImageContent } from './ImageContent'
 import {
     HoverArrow,
@@ -10,6 +10,7 @@ import {
 import { CoverContent } from './CoverContent'
 import {
     capitalizeFirstLetter,
+    getFilterLink,
     getStringSeparatedByCommas,
     maxLength,
 } from '@/utils'
@@ -24,6 +25,9 @@ interface TableItemsListProps {
 
 export const TableItemsList: FC<TableItemsListProps> = (props) => {
     const { list, fetchData } = props
+
+    const location = useLocation()
+    const isAnimePage = location.pathname === '/anime'
 
     const getToUrl = (item: ChartItem) => {
         return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
@@ -68,11 +72,38 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                         <p className="text-gray-400">{item.title.native}</p>
 
                         <div className="flex gap-2 text-white">
-                            <p>{capitalizeFirstLetter(item.format)}</p>
+                            {isAnimePage && (
+                                <p>{capitalizeFirstLetter(item.format)}</p>
+                            )}
+                            {!isAnimePage &&
+                                getFilterLink(
+                                    capitalizeFirstLetter(item.format),
+                                    'format',
+                                    {
+                                        mediaType: item.type.toLowerCase(),
+                                    }
+                                )}
                             <span>/</span>
-                            {item.startDate.year}
+                            {isAnimePage && item.startDate.year}
+                            {!isAnimePage &&
+                                getFilterLink(
+                                    item.startDate.year.toString(),
+                                    'year',
+                                    {
+                                        mediaType: item.type.toLowerCase(),
+                                    }
+                                )}
                             <span>/</span>
-                            <p>{getStringSeparatedByCommas(item.genres)}</p>
+                            {isAnimePage && (
+                                <p>{getStringSeparatedByCommas(item.genres)}</p>
+                            )}
+                            <div>
+                                {!isAnimePage &&
+                                    getFilterLink('', 'genres', {
+                                        genres: item.genres,
+                                        mediaType: item.type.toLowerCase(),
+                                    })}
+                            </div>
                         </div>
 
                         <div

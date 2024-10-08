@@ -54,10 +54,9 @@ export const getFormattedDate = (args: {
     }
 
     if (month) {
-        const monthText = new Date(2000, month, 1).toLocaleString('en', {
+        return new Date(2000, month, 1).toLocaleString('en', {
             month: 'long',
         })
-        return monthText
     }
 
     if (year) {
@@ -75,6 +74,6 @@ export {
     calculateRating,
 } from '@/utils/media'
 export { debounce } from '@/utils/debounce'
-export { createJsxLinks, parseWithLinks } from '@/utils/linkUtils'
+export { getFilterLink, parseWithLinks } from '@/utils/linkUtils'
 export { getDynamicSearchParams } from '@/utils/query'
 export { getObjWithoutEmptyValues } from '@/utils/objects'

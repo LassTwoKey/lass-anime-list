@@ -7,22 +7,94 @@ import type {
 } from 'html-react-parser'
 import { StyledLink } from '@/ui/StyledLink'
 
-export const createJsxLinks = (
-    arr: { id: number | string; content: string }[],
-    url: string
+interface ValueObject {
+    season?: string
+    year?: number
+    studioId?: number
+    genres?: string[]
+    characters?: { id: number; content: string }[]
+    mediaType?: string
+}
+
+export const getFilterLink = (
+    value: string,
+    filterName: string,
+    values?: ValueObject
 ) => {
-    return (
-        <>
-            {arr.map((item, index) => (
-                <span key={item.id}>
-                    <StyledLink to={`${url}/${item.id}`}>
-                        {item.content}
+    switch (filterName) {
+        case 'type':
+            return <StyledLink to={`/${values?.mediaType}`}>{value}</StyledLink>
+        case 'status':
+            return (
+                <StyledLink
+                    to={`/${values?.mediaType}?status=${value.toUpperCase()}`}
+                >
+                    {value}
+                </StyledLink>
+            )
+        case 'season':
+            return (
+                <StyledLink
+                    to={`/${values?.mediaType}?season=${values?.season}&year=${values?.year}%`}
+                >
+                    {value}
+                </StyledLink>
+            )
+        case 'studio':
+            if (!value) return ''
+            return (
+                <StyledLink
+                    to={
+                        values?.mediaType === 'anime'
+                            ? `/studio/${values?.studioId}/${value}`
+                            : ''
+                    }
+                >
+                    {value}
+                </StyledLink>
+            )
+        case 'genres':
+            return values?.genres?.map((genre, index) => (
+                <span key={genre}>
+                    <StyledLink to={`/${values?.mediaType}?genres=${genre}`}>
+                        {genre}
                     </StyledLink>
-                    {arr.length - 1 !== index ? ', ' : ''}
+                    {values.genres?.length &&
+                    values.genres?.length - 1 !== index
+                        ? ', '
+                        : ''}
                 </span>
-            ))}
-        </>
-    )
+            ))
+        case 'characters':
+            return values?.characters?.map((character, index) => (
+                <span key={character.id}>
+                    <StyledLink to={`/character/${character.id}`}>
+                        {character.content}
+                    </StyledLink>
+                    {values.characters?.length &&
+                    values.characters?.length - 1 !== index
+                        ? ', '
+                        : ''}
+                </span>
+            ))
+        case 'format':
+            return (
+                <StyledLink
+                    to={`/${values?.mediaType}?format=${value.toUpperCase()}`}
+                    isSecondary
+                >
+                    {value}
+                </StyledLink>
+            )
+        case 'year':
+            return (
+                <StyledLink to={`/${values?.mediaType}?year=${value}%`}>
+                    {value}
+                </StyledLink>
+            )
+        default:
+            return ''
+    }
 }
 
 export const parseWithLinks = (

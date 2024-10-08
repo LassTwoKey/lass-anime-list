@@ -1,22 +1,14 @@
 import { FC } from 'react'
 import {
     capitalizeFirstLetter,
-    createJsxLinks,
     getCharactersName,
+    getFilterLink,
     getFormattedDate,
-    getStringSeparatedByCommas,
 } from '@/utils'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
-import { StyledLink } from '@/ui/StyledLink'
 
 interface OverviewProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
-}
-
-interface ValueObject {
-    season?: string
-    year?: number
-    genres?: string[]
 }
 
 export const Overview: FC<OverviewProps> = (props) => {
@@ -24,58 +16,6 @@ export const Overview: FC<OverviewProps> = (props) => {
 
     let mediaInfo = null
     const mediaType = mediaDetails.type.toLowerCase()
-
-    const getFilterLink = (
-        value: string,
-        filterName: string,
-        values?: ValueObject
-    ) => {
-        switch (filterName) {
-            case 'type':
-                return <StyledLink to={`/${mediaType}`}>{value}</StyledLink>
-            case 'status':
-                return (
-                    <StyledLink
-                        to={`/${mediaType}?status=${value.toUpperCase()}`}
-                    >
-                        {value}
-                    </StyledLink>
-                )
-            case 'season':
-                return (
-                    <StyledLink
-                        to={`/${mediaType}?season=${values?.season}&year=${values?.year}%`}
-                    >
-                        {value}
-                    </StyledLink>
-                )
-            case 'studio':
-                return (
-                    <StyledLink
-                        to={
-                            mediaDetails.type === 'ANIME'
-                                ? `/studio/${mediaDetails.studios.edges[0].node.id}/${mediaDetails.studios.edges[0].node.name}`
-                                : ''
-                        }
-                    >
-                        {value}
-                    </StyledLink>
-                )
-            case 'genres':
-                if (!values?.genres?.length) return ''
-
-                return values?.genres?.map((genre, index) => (
-                    <span key={genre}>
-                        <StyledLink to={`/${mediaType}?genres=${genre}`}>
-                            {genre}
-                        </StyledLink>
-                        {values.genres?.length - 1 !== index ? ', ' : ''}
-                    </span>
-                ))
-            default:
-                return ''
-        }
-    }
 
     if (mediaDetails.type === 'ANIME') {
         const animeDetails = mediaDetails as MediaAnimeDetails
@@ -86,13 +26,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             ),
             'Start Date': getFormattedDate(animeDetails.startDate),
             'End Date': getFormattedDate(animeDetails.endDate),
-            Genres: getFilterLink(
-                getStringSeparatedByCommas(animeDetails.genres),
-                'genres',
-                {
-                    genres: animeDetails.genres,
-                }
-            ),
+            Genres: getFilterLink('', 'genres', {
+                genres: animeDetails.genres,
+                mediaType,
+            }),
             Source: capitalizeFirstLetter(animeDetails.source).replace(
                 '_',
                 ' '
@@ -109,16 +46,20 @@ export const Overview: FC<OverviewProps> = (props) => {
                 {
                     season: animeDetails.season,
                     year: animeDetails.seasonYear,
+                    mediaType,
                 }
             ),
             Studio: getFilterLink(
-                mediaDetails.studios.edges[0].node.name,
-                'studio'
+                mediaDetails.studios.edges[0]?.node?.name,
+                'studio',
+                {
+                    studioId: mediaDetails.studios.edges[0]?.node?.id,
+                    mediaType,
+                }
             ),
-            Characters: createJsxLinks(
-                getCharactersName(animeDetails.characters),
-                '/character'
-            ),
+            Characters: getFilterLink('', 'characters', {
+                characters: getCharactersName(animeDetails.characters),
+            }),
         }
     }
 
@@ -131,13 +72,10 @@ export const Overview: FC<OverviewProps> = (props) => {
             ),
             'Start Date': getFormattedDate(mangaDetails.startDate),
             'End Date': getFormattedDate(mangaDetails.endDate),
-            Genres: getFilterLink(
-                getStringSeparatedByCommas(mangaDetails.genres),
-                'genres',
-                {
-                    genres: mangaDetails.genres,
-                }
-            ),
+            Genres: getFilterLink('', 'genres', {
+                genres: mangaDetails.genres,
+                mediaType,
+            }),
             Source: capitalizeFirstLetter(mangaDetails.source).replace(
                 '_',
                 ' '
@@ -146,10 +84,9 @@ export const Overview: FC<OverviewProps> = (props) => {
                 capitalizeFirstLetter(mangaDetails.status),
                 'status'
             ),
-            Characters: createJsxLinks(
-                getCharactersName(mangaDetails.characters),
-                '/character'
-            ),
+            Characters: getFilterLink('', 'characters', {
+                characters: getCharactersName(mangaDetails.characters),
+            }),
         }
     }
 
