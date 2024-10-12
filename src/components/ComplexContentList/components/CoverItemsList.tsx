@@ -8,10 +8,10 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { CoverContent } from './CoverContent'
-import { capitalizeFirstLetter } from '@/utils'
 import { ChartItem } from '@/types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ItemsLoader } from './ItemsLoader'
+import {getFormatName} from "@/utils/media.ts";
 
 interface CoverItemsListProps {
     list: ChartItem[]
@@ -52,7 +52,7 @@ export const CoverItemsList: FC<CoverItemsListProps> = (props) => {
                                 </h3>
                             </Link>
                             <div className="flex gap-2 text-white">
-                                <p>{capitalizeFirstLetter(item.format)}</p>
+                                <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
                                 <span>/</span>
                                 {item.startDate.year}
                             </div>

@@ -3,21 +3,22 @@ import { ComplexContentList } from '@/components/ComplexContentList/ComplexConte
 import { cn } from '@/lib/utils'
 import { AllFilters, ListType } from '@/types'
 import { ErrorBlock } from '@/ui/ErrorBlock'
-import useMedia from '../hooks/useMedia'
+import useMedia from '@/hooks/useMedia'
 
 interface MediaBlockProps {
     className: string
     type: ListType
     filters: AllFilters
+    isAnime: boolean
 }
 
 export const MediaBlock: FC<MediaBlockProps> = (props) => {
-    const { className, type, filters } = props
+    const { className, type, filters, isAnime } = props
 
     const {
         content: { loading, error, data },
         fetchData,
-    } = useMedia(filters)
+    } = useMedia(filters, isAnime ? 'ANIME' : 'MANGA')
 
     return (
         <div className={cn(className)}>

@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/drawer'
 import { Button } from '../ui/button'
 
-export const AnimeContent = () => {
-    const currentType = (localStorage.getItem('animeType') ??
+export const MangaContent = () => {
+    const currentType = (localStorage.getItem('mangaType') ??
         'chart') as ListType
 
     const [type, setType] = useState(currentType)
@@ -29,7 +29,7 @@ export const AnimeContent = () => {
 
     return (
         <div className="pt-12 container mx-auto px-4">
-            <Title className="my-4" text="📺 Anime" />
+            <Title className="my-4" text="📘 Manga" />
             <Actions
                 setType={setType}
                 filters={filters}
@@ -41,7 +41,7 @@ export const AnimeContent = () => {
                     title="Filters"
                     className="md:w-56 hidden md:flex"
                     filters={filters}
-                    isAnime={true}
+                    isAnime={false}
                     setFilters={setFilters}
                 />
                 <div className="md:hidden">
@@ -61,14 +61,14 @@ export const AnimeContent = () => {
                                 </DrawerHeader>
                                 <SideFilters
                                     filters={filters}
-                                    isAnime={true}
+                                    isAnime={false}
                                     setFilters={setFilters}
                                 />
                             </div>
                         </DrawerContent>
                     </Drawer>
                 </div>
-                <MediaBlock className="flex-1" isAnime={true} type={type} filters={filters} />
+                <MediaBlock className="flex-1" isAnime={false} type={type} filters={filters} />
             </div>
         </div>
     )

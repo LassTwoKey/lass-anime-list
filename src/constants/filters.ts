@@ -153,6 +153,22 @@ export const FORMAT_LIST = [
         name: 'Music',
     },
 ]
+
+export const MANGA_FORMAT_LIST = [
+    {
+        id: 'MANGA',
+        name: 'Manga',
+    },
+    {
+        id: 'NOVEL',
+        name: 'Novel',
+    },
+    {
+        id: 'ONE_SHOT',
+        name: 'One Shot Manga',
+    },
+]
+
 export const LICENSED_BY_LIST = [
     {
         id: '5',

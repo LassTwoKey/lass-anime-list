@@ -1,8 +1,8 @@
 import { SearchAnimeDetails } from '@/types'
 import { ErrorBlock } from '@/ui/ErrorBlock'
-import { capitalizeFirstLetter } from '@/utils'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import {getFormatName} from "@/utils/media.ts";
 
 interface SearchListProps {
     title: string
@@ -35,7 +35,7 @@ export const SearchList: FC<SearchListProps> = (props) => {
 
     const colorTitleClass = title === 'Anime' ? 'text-red-500' : 'text-blue-500'
 
-    const ListCompont = (
+    const ListComponent = (
         <>
             <h2 className={['pt-4 text-lg', colorTitleClass].join(' ')}>
                 {title}
@@ -61,7 +61,7 @@ export const SearchList: FC<SearchListProps> = (props) => {
                                 </h3>
                             </Link>
                             <span className="flex gap-2 text-white">
-                                <p>{capitalizeFirstLetter(item.format)}</p>
+                                <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
                                 <span>/</span>
                                 {item.startDate.year}
                             </span>
@@ -72,5 +72,5 @@ export const SearchList: FC<SearchListProps> = (props) => {
         </>
     )
 
-    return <div className="md:w-1/2">{!!items.length && ListCompont}</div>
+    return <div className="md:w-1/2">{!!items.length && ListComponent}</div>
 }

@@ -17,6 +17,7 @@ import {
 import { ChartItem } from '@/types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ItemsLoader } from './ItemsLoader'
+import { getFormatName } from "@/utils/media.ts";
 
 interface TableItemsListProps {
     list: ChartItem[]
@@ -73,7 +74,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
 
                         <div className="flex gap-2 text-white">
                             {isAnimePage && (
-                                <p>{capitalizeFirstLetter(item.format)}</p>
+                                <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
                             )}
                             {!isAnimePage &&
                                 getFilterLink(

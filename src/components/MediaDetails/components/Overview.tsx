@@ -6,6 +6,7 @@ import {
     getFormattedDate,
 } from '@/utils'
 import { MediaAnimeDetails, MediaMangaDetails } from '@/types'
+import {getFormatName} from "@/utils/media.ts";
 
 interface OverviewProps {
     mediaDetails: MediaAnimeDetails | MediaMangaDetails
@@ -16,14 +17,10 @@ export const Overview: FC<OverviewProps> = (props) => {
 
     let mediaInfo = null
     const mediaType = mediaDetails.type.toLowerCase()
-
     if (mediaDetails.type === 'ANIME') {
         const animeDetails = mediaDetails as MediaAnimeDetails
         mediaInfo = {
-            Type: getFilterLink(
-                capitalizeFirstLetter(animeDetails.type),
-                'type'
-            ),
+            Type: getFormatName(animeDetails.format, true),
             'Start Date': getFormattedDate(animeDetails.startDate),
             'End Date': getFormattedDate(animeDetails.endDate),
             Genres: getFilterLink('', 'genres', {
@@ -66,10 +63,7 @@ export const Overview: FC<OverviewProps> = (props) => {
     if (mediaDetails.type === 'MANGA') {
         const mangaDetails = mediaDetails as MediaMangaDetails
         mediaInfo = {
-            Type: getFilterLink(
-                capitalizeFirstLetter(mangaDetails.type),
-                'type'
-            ),
+            Type: getFormatName(mangaDetails.format, false),
             'Start Date': getFormattedDate(mangaDetails.startDate),
             'End Date': getFormattedDate(mangaDetails.endDate),
             Genres: getFilterLink('', 'genres', {

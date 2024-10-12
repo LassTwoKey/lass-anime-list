@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { GET_MEDIA_LIST } from '../api/api'
+import { GET_MEDIA_LIST } from '@/api/filters'
 import { useLazyQuery } from '@apollo/client'
 import { AllFilters, ChartItem } from '@/types'
 import { getObjWithoutEmptyValues } from '@/utils'
 
-const useMedia = (filters: AllFilters) => {
+const useMedia = (filters: AllFilters, type: 'MANGA' | 'ANIME') => {
     const [page, setPage] = useState(1)
     const [getMediaData, { loading, error, data }] = useLazyQuery(
         GET_MEDIA_LIST,
@@ -23,7 +23,7 @@ const useMedia = (filters: AllFilters) => {
             variables: {
                 page: page + 1,
                 perPage: 15,
-                type: 'ANIME',
+                type,
                 ...filtersToServer,
             },
         })
@@ -39,7 +39,7 @@ const useMedia = (filters: AllFilters) => {
             variables: {
                 page: 1,
                 perPage: 15,
-                type: 'ANIME',
+                type,
                 ...filtersToServer,
             },
         })

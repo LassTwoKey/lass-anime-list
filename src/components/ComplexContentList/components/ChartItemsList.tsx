@@ -9,13 +9,13 @@ import {
 } from '@/components/ui/hover-card'
 import { CoverContent } from './CoverContent'
 import {
-    capitalizeFirstLetter,
     getStringSeparatedByCommas,
     maxLength,
 } from '@/utils'
 import { ChartItem } from '@/types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ItemsLoader } from './ItemsLoader'
+import {getFormatName} from "@/utils/media.ts";
 
 interface ChartItemsListProps {
     list: ChartItem[]
@@ -68,7 +68,7 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                         <p className="text-gray-400">{item.title.native}</p>
 
                         <div className="flex gap-2 text-white">
-                            <p>{capitalizeFirstLetter(item.format)}</p>
+                            <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
                             <span>/</span>
                             {item.startDate.year}
                             <span>/</span>

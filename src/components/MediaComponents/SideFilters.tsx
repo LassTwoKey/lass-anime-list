@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { Filter } from './Filter'
 import {
     YEAR_LIST,
@@ -6,6 +6,7 @@ import {
     SEASON_LIST,
     GENRE_LIST,
     FORMAT_LIST,
+    MANGA_FORMAT_LIST,
     YEAR_RANGE,
     EPISODE_RANGE,
     DURATION_RANGE,
@@ -22,13 +23,14 @@ import { CheckboxFilter } from './CheckboxFilter'
 
 interface SideFiltersProps {
     className?: string
-    title: string
+    title?: string
     filters: AllFilters
-    setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
+    setFilters: Dispatch<SetStateAction<AllFilters>>
+    isAnime: boolean
 }
 
 export const SideFilters: FC<SideFiltersProps> = (props) => {
-    const { className, title, filters, setFilters } = props
+    const { className, title, filters, setFilters, isAnime } = props
 
     const setCurrentFilter = (name: NameFilter, value: FilterValue) => {
         if (typeof value === 'string') {
@@ -108,19 +110,19 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />
-            <Filter
+            {isAnime && <Filter
                 title="Season"
                 name="season"
                 value={filters['season']}
                 list={SEASON_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
-            />
+            />}
             <Filter
                 title="Format"
                 name="format"
                 value={filters['format']}
-                list={FORMAT_LIST}
+                list={isAnime ? FORMAT_LIST : MANGA_FORMAT_LIST}
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />
@@ -138,15 +140,15 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
                 />
-                <Filter
+                {isAnime && <Filter
                     title="Source Material"
                     name="source"
                     value={filters['source']}
                     list={SOURCE_LIST}
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
-                />
-                <MultiSelectFilter
+                />}
+                {isAnime && <MultiSelectFilter
                     className="mb-2"
                     title="Streaming on"
                     name="licensedBy"
@@ -154,7 +156,7 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                     list={LICENSED_BY_LIST}
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
-                />
+                />}
                 <RangeFilter
                     title="Year range"
                     names={['yearGreater', 'yearLesser']}
@@ -172,7 +174,7 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                         return [+value[0].slice(0, 4), +value[1].slice(0, 4)]
                     }}
                 />
-                <RangeFilter
+                {isAnime && <RangeFilter
                     title="Episodes"
                     names={['episodeGreater', 'episodeLesser']}
                     filterValue={[
@@ -182,8 +184,8 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                     range={EPISODE_RANGE}
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
-                />
-                <RangeFilter
+                />}
+                {isAnime && <RangeFilter
                     title="Duration"
                     names={['durationGreater', 'durationLesser']}
                     filterValue={[
@@ -193,7 +195,7 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                     range={DURATION_RANGE}
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
-                />
+                />}
                 <CheckboxFilter
                     title="Adult content"
                     name="isAdult"
