@@ -108,7 +108,7 @@ export const Overview: FC<OverviewProps> = (props) => {
             <div className="mt-4 flex flex-col gap-3">
                 {itemInfoList.map((mediaInfo) => (
                     <div key={`${mediaInfo[0]}`} className="grid grid-cols-2">
-                        <div className="font-medium">{mediaInfo[0]}</div>
+                        <div className="font-medium text-slate-50">{mediaInfo[0]}</div>
                         <div>{mediaInfo[1]}</div>
                     </div>
                 ))}

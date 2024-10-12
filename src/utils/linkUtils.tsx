@@ -23,11 +23,15 @@ export const getFilterLink = (
 ) => {
     switch (filterName) {
         case 'type':
-            return <StyledLink to={`/${values?.mediaType}`}>{value}</StyledLink>
+            return <StyledLink
+                to={`/${values?.mediaType}`}
+                className="text-green-100 hover:text-green-300"
+            >{value}</StyledLink>
         case 'status':
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?status=${value.toUpperCase()}`}
+                    className="text-green-100 hover:text-green-300"
                 >
                     {value}
                 </StyledLink>
@@ -36,6 +40,7 @@ export const getFilterLink = (
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?season=${values?.season}&year=${values?.year}%`}
+                    className="text-green-100 hover:text-green-300"
                 >
                     {value}
                 </StyledLink>
@@ -49,6 +54,7 @@ export const getFilterLink = (
                             ? `/studio/${values?.studioId}/${value}`
                             : ''
                     }
+                    className="text-green-100 hover:text-green-300"
                 >
                     {value}
                 </StyledLink>
@@ -56,7 +62,10 @@ export const getFilterLink = (
         case 'genres':
             return values?.genres?.map((genre, index) => (
                 <span key={genre}>
-                    <StyledLink to={`/${values?.mediaType}?genres=${genre}`}>
+                    <StyledLink
+                        to={`/${values?.mediaType}?genres=${genre}`}
+                        className="text-green-100 hover:text-green-300"
+                    >
                         {genre}
                     </StyledLink>
                     {values.genres?.length &&
@@ -68,7 +77,10 @@ export const getFilterLink = (
         case 'characters':
             return values?.characters?.map((character, index) => (
                 <span key={character.id}>
-                    <StyledLink to={`/character/${character.id}`}>
+                    <StyledLink
+                        to={`/character/${character.id}`}
+                        className="text-green-100 hover:text-green-300"
+                    >
                         {character.content}
                     </StyledLink>
                     {values.characters?.length &&
@@ -81,14 +93,17 @@ export const getFilterLink = (
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?format=${value.toUpperCase()}`}
-                    isSecondary
+                    className="text-green-100 hover:text-green-300"
                 >
                     {value}
                 </StyledLink>
             )
         case 'year':
             return (
-                <StyledLink to={`/${values?.mediaType}?year=${value}%`}>
+                <StyledLink
+                    to={`/${values?.mediaType}?year=${value}%`}
+                    className="text-green-100 hover:text-green-300"
+                >
                     {value}
                 </StyledLink>
             )

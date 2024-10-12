@@ -7,10 +7,11 @@ interface StyledLinkProps {
     children: React.ReactNode
     isAnime?: boolean
     isManga?: boolean
+    className?: string
 }
 
 export const StyledLink: FC<StyledLinkProps> = (props) => {
-    const { to, children, isAnime, isManga } = props
+    const { to, children, isAnime, isManga , className} = props
     return (
         <Link
             to={to}
@@ -18,7 +19,8 @@ export const StyledLink: FC<StyledLinkProps> = (props) => {
                 ' hover:underline duration-150',
                 isAnime && 'text-blue-500 hover:text-blue-600',
                 isManga && 'text-red-500 hover:text-red-600',
-                !isAnime && !isManga && 'text-green-500 hover:text-green-600'
+                !isAnime && !isManga && 'text-green-500 hover:text-green-600',
+                className
             )}
         >
             {children}
