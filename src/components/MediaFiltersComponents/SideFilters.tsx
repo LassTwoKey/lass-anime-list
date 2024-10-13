@@ -110,14 +110,16 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                 setCurrentFilter={setCurrentFilter}
                 removeCurrentFilter={removeCurrentFilter}
             />
-            {isAnime && <Filter
-                title="Season"
-                name="season"
-                value={filters['season']}
-                list={SEASON_LIST}
-                setCurrentFilter={setCurrentFilter}
-                removeCurrentFilter={removeCurrentFilter}
-            />}
+            {isAnime && (
+                <Filter
+                    title="Season"
+                    name="season"
+                    value={filters['season']}
+                    list={SEASON_LIST}
+                    setCurrentFilter={setCurrentFilter}
+                    removeCurrentFilter={removeCurrentFilter}
+                />
+            )}
             <Filter
                 title="Format"
                 name="format"
@@ -140,23 +142,27 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                     setCurrentFilter={setCurrentFilter}
                     removeCurrentFilter={removeCurrentFilter}
                 />
-                {isAnime && <Filter
-                    title="Source Material"
-                    name="source"
-                    value={filters['source']}
-                    list={SOURCE_LIST}
-                    setCurrentFilter={setCurrentFilter}
-                    removeCurrentFilter={removeCurrentFilter}
-                />}
-                {isAnime && <MultiSelectFilter
-                    className="mb-2"
-                    title="Streaming on"
-                    name="licensedBy"
-                    value={filters['licensedBy']}
-                    list={LICENSED_BY_LIST}
-                    setCurrentFilter={setCurrentFilter}
-                    removeCurrentFilter={removeCurrentFilter}
-                />}
+                {isAnime && (
+                    <Filter
+                        title="Source Material"
+                        name="source"
+                        value={filters['source']}
+                        list={SOURCE_LIST}
+                        setCurrentFilter={setCurrentFilter}
+                        removeCurrentFilter={removeCurrentFilter}
+                    />
+                )}
+                {isAnime && (
+                    <MultiSelectFilter
+                        className="mb-2"
+                        title="Streaming on"
+                        name="licensedBy"
+                        value={filters['licensedBy']}
+                        list={LICENSED_BY_LIST}
+                        setCurrentFilter={setCurrentFilter}
+                        removeCurrentFilter={removeCurrentFilter}
+                    />
+                )}
                 <RangeFilter
                     title="Year range"
                     names={['yearGreater', 'yearLesser']}
@@ -174,28 +180,32 @@ export const SideFilters: FC<SideFiltersProps> = (props) => {
                         return [+value[0].slice(0, 4), +value[1].slice(0, 4)]
                     }}
                 />
-                {isAnime && <RangeFilter
-                    title="Episodes"
-                    names={['episodeGreater', 'episodeLesser']}
-                    filterValue={[
-                        filters['episodeGreater'],
-                        filters['episodeLesser'],
-                    ]}
-                    range={EPISODE_RANGE}
-                    setCurrentFilter={setCurrentFilter}
-                    removeCurrentFilter={removeCurrentFilter}
-                />}
-                {isAnime && <RangeFilter
-                    title="Duration"
-                    names={['durationGreater', 'durationLesser']}
-                    filterValue={[
-                        filters['durationGreater'],
-                        filters['durationLesser'],
-                    ]}
-                    range={DURATION_RANGE}
-                    setCurrentFilter={setCurrentFilter}
-                    removeCurrentFilter={removeCurrentFilter}
-                />}
+                {isAnime && (
+                    <RangeFilter
+                        title="Episodes"
+                        names={['episodeGreater', 'episodeLesser']}
+                        filterValue={[
+                            filters['episodeGreater'],
+                            filters['episodeLesser'],
+                        ]}
+                        range={EPISODE_RANGE}
+                        setCurrentFilter={setCurrentFilter}
+                        removeCurrentFilter={removeCurrentFilter}
+                    />
+                )}
+                {isAnime && (
+                    <RangeFilter
+                        title="Duration"
+                        names={['durationGreater', 'durationLesser']}
+                        filterValue={[
+                            filters['durationGreater'],
+                            filters['durationLesser'],
+                        ]}
+                        range={DURATION_RANGE}
+                        setCurrentFilter={setCurrentFilter}
+                        removeCurrentFilter={removeCurrentFilter}
+                    />
+                )}
                 <CheckboxFilter
                     title="Adult content"
                     name="isAdult"

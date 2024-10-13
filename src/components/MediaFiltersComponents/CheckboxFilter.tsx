@@ -14,7 +14,7 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = (props) => {
     const { title, name, value, setCurrentFilter } = props
     const [checked, setChecked] = useState(value as boolean)
 
-    const checkedChangeHanlder = (val: boolean) => {
+    const checkedChangeHandler = (val: boolean) => {
         setCurrentFilter(name, val)
     }
 
@@ -28,7 +28,7 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = (props) => {
                 id="adult-only"
                 checked={checked}
                 defaultChecked={checked}
-                onCheckedChange={checkedChangeHanlder}
+                onCheckedChange={checkedChangeHandler}
             />
             <label
                 className="text-gray-400 text-sm font-medium cursor-pointer"

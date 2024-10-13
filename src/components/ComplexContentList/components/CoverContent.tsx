@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
 import { ChartItem } from '@/types'
@@ -10,46 +10,8 @@ import {
     maxLength,
 } from '@/utils'
 import { cn } from '@/lib/utils'
-import { Link } from 'react-router-dom'
-
-const GET_ANIME_INFO = gql`
-    query GetItemInfo($id: Int) {
-        Media(id: $id) {
-            episodes
-            duration
-            status
-            source
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
-        }
-    }
-`
-const GET_MANGA_INFO = gql`
-    query GetItemInfo($id: Int) {
-        Media(id: $id) {
-            status
-            source
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
-        }
-    }
-`
+import {StyledLink} from "@/ui/StyledLink.tsx";
+import {GET_ANIME_INFO, GET_MANGA_INFO} from "@/api/coverInfo.ts";
 
 interface CoverContentProps {
     item: ChartItem
@@ -125,11 +87,12 @@ export const CoverContent: FC<CoverContentProps> = (props) => {
     return (
         <div className="divide-y divide-neutral-700 text-sm lg:text-base">
             <div className="pb-4">
-                <Link to={getToUrl(item)}>
-                    <h3 className="inline-block overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
+                <StyledLink to={getToUrl(item)} noUnderline={true}>
+                    <h3 className="overflow-hidden text-ellipsis text-xl">
                         {item.title.romaji}
                     </h3>
-                </Link>
+                </StyledLink>
+
                 <p className="text-gray-400">{item.title.native}</p>
             </div>
             <div className={cn('text-gray-400', !!item.description && 'pt-4')}>

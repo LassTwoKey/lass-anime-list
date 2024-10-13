@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
 import parse, { domToReact } from 'html-react-parser'
 import type {
     HTMLReactParserOptions,
     Element,
     DOMNode,
 } from 'html-react-parser'
+import { Link } from 'react-router-dom'
 import { StyledLink } from '@/ui/StyledLink'
 
 interface ValueObject {
@@ -14,6 +14,7 @@ interface ValueObject {
     genres?: string[]
     characters?: { id: number; content: string }[]
     mediaType?: string
+    isSecondary?: boolean,
 }
 
 export const getFilterLink = (
@@ -25,13 +26,13 @@ export const getFilterLink = (
         case 'type':
             return <StyledLink
                 to={`/${values?.mediaType}`}
-                className="text-green-100 hover:text-green-300"
+                isSecondary={values?.isSecondary}
             >{value}</StyledLink>
         case 'status':
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?status=${value.toUpperCase()}`}
-                    className="text-green-100 hover:text-green-300"
+                    isSecondary={values?.isSecondary}
                 >
                     {value}
                 </StyledLink>
@@ -40,7 +41,7 @@ export const getFilterLink = (
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?season=${values?.season}&year=${values?.year}%`}
-                    className="text-green-100 hover:text-green-300"
+                    isSecondary={values?.isSecondary}
                 >
                     {value}
                 </StyledLink>
@@ -54,7 +55,7 @@ export const getFilterLink = (
                             ? `/studio/${values?.studioId}/${value}`
                             : ''
                     }
-                    className="text-green-100 hover:text-green-300"
+                    isSecondary={values?.isSecondary}
                 >
                     {value}
                 </StyledLink>
@@ -64,7 +65,7 @@ export const getFilterLink = (
                 <span key={genre}>
                     <StyledLink
                         to={`/${values?.mediaType}?genres=${genre}`}
-                        className="text-green-100 hover:text-green-300"
+                        isSecondary={values?.isSecondary}
                     >
                         {genre}
                     </StyledLink>
@@ -79,7 +80,7 @@ export const getFilterLink = (
                 <span key={character.id}>
                     <StyledLink
                         to={`/character/${character.id}`}
-                        className="text-green-100 hover:text-green-300"
+                        isSecondary={values?.isSecondary}
                     >
                         {character.content}
                     </StyledLink>
@@ -93,7 +94,7 @@ export const getFilterLink = (
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?format=${value.toUpperCase()}`}
-                    className="text-green-100 hover:text-green-300"
+                    isSecondary={values?.isSecondary}
                 >
                     {value}
                 </StyledLink>
@@ -102,7 +103,7 @@ export const getFilterLink = (
             return (
                 <StyledLink
                     to={`/${values?.mediaType}?year=${value}%`}
-                    className="text-green-100 hover:text-green-300"
+                    isSecondary={values?.isSecondary}
                 >
                     {value}
                 </StyledLink>

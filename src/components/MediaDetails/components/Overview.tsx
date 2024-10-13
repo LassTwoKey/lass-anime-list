@@ -25,7 +25,7 @@ export const Overview: FC<OverviewProps> = (props) => {
             'End Date': getFormattedDate(animeDetails.endDate),
             Genres: getFilterLink('', 'genres', {
                 genres: animeDetails.genres,
-                mediaType,
+                mediaType
             }),
             Source: capitalizeFirstLetter(animeDetails.source).replace(
                 '_',

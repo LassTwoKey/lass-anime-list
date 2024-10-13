@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 import { ImageContent } from './ImageContent'
 import {
     HoverArrow,
@@ -8,14 +7,12 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { CoverContent } from './CoverContent'
-import {
-    getStringSeparatedByCommas,
-    maxLength,
-} from '@/utils'
+import { getStringSeparatedByCommas, maxLength } from '@/utils'
 import { ChartItem } from '@/types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ItemsLoader } from './ItemsLoader'
-import {getFormatName} from "@/utils/media.ts";
+import { getFormatName } from '@/utils/media.ts'
+import { StyledLink } from '@/ui/StyledLink.tsx'
 
 interface ChartItemsListProps {
     list: ChartItem[]
@@ -59,16 +56,21 @@ export const ChartItemsList: FC<ChartItemsListProps> = (props) => {
                     </HoverCard>
 
                     <div className="m-4 flex max-h-56 overflow-hidden flex-col gap-2">
-                        <Link to={getToUrl(item)}>
-                            <h3 className=" overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
+                        <StyledLink to={getToUrl(item)} noUnderline={true}>
+                            <h3 className="overflow-hidden text-ellipsis text-xl">
                                 {item.title.romaji}
                             </h3>
-                        </Link>
+                        </StyledLink>
 
                         <p className="text-gray-400">{item.title.native}</p>
 
                         <div className="flex gap-2 text-white">
-                            <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
+                            <p className="whitespace-nowrap">
+                                {getFormatName(
+                                    item.format,
+                                    item.type === 'ANIME'
+                                )}
+                            </p>
                             <span>/</span>
                             {item.startDate.year}
                             <span>/</span>

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { ImageContent } from './ImageContent'
 import {
     HoverArrow,
@@ -8,16 +8,12 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { CoverContent } from './CoverContent'
-import {
-    capitalizeFirstLetter,
-    getFilterLink,
-    getStringSeparatedByCommas,
-    maxLength,
-} from '@/utils'
+import { getFilterLink, getStringSeparatedByCommas, maxLength } from '@/utils'
 import { ChartItem } from '@/types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ItemsLoader } from './ItemsLoader'
-import { getFormatName } from "@/utils/media.ts";
+import { getFormat, getFormatName } from '@/utils/media.ts'
+import { StyledLink } from '@/ui/StyledLink.tsx'
 
 interface TableItemsListProps {
     list: ChartItem[]
@@ -64,24 +60,36 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                     </HoverCard>
 
                     <div className="m-4 flex max-h-56 overflow-hidden flex-col gap-2">
-                        <Link to={getToUrl(item)}>
-                            <h3 className=" overflow-hidden text-ellipsis text-green-500 text-xl hover:text-green-600 duration-150">
+                        <StyledLink to={getToUrl(item)} noUnderline={true}>
+                            <h3 className="overflow-hidden text-ellipsis text-xl">
                                 {item.title.romaji}
                             </h3>
-                        </Link>
+                        </StyledLink>
 
                         <p className="text-gray-400">{item.title.native}</p>
 
                         <div className="flex gap-2 text-white">
                             {isAnimePage && (
-                                <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
+                                <p className="whitespace-nowrap">
+                                    {getFormatName(
+                                        item.format,
+                                        item.type === 'ANIME'
+                                    )}
+                                </p>
                             )}
                             {!isAnimePage &&
                                 getFilterLink(
-                                    capitalizeFirstLetter(item.format),
+                                    getFormatName(
+                                        item.format,
+                                        item.type === 'ANIME'
+                                    ) as string,
                                     'format',
                                     {
-                                        mediaType: item.type.toLowerCase(),
+                                        mediaType: getFormat(
+                                            item.format,
+                                            item.type === 'ANIME'
+                                        )?.id,
+                                        isSecondary: true,
                                     }
                                 )}
                             <span>/</span>
@@ -92,6 +100,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                                     'year',
                                     {
                                         mediaType: item.type.toLowerCase(),
+                                        isSecondary: true,
                                     }
                                 )}
                             <span>/</span>
@@ -103,6 +112,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                                     getFilterLink('', 'genres', {
                                         genres: item.genres,
                                         mediaType: item.type.toLowerCase(),
+                                        isSecondary: true,
                                     })}
                             </div>
                         </div>
@@ -118,6 +128,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
             ))}
         </div>
     )
+
     return (
         <InfiniteScroll
             className="px-4 -mx-4"

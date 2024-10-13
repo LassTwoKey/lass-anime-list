@@ -1,11 +1,11 @@
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { ListType } from '@/types'
 import { Grid2X2, Grid3X3, TableProperties } from 'lucide-react'
 
 interface ContentViewProps {
-    setViewType: React.Dispatch<React.SetStateAction<ListType>>
+    setViewType: Dispatch<SetStateAction<ListType>>
 }
 
 export const ContentView: FC<ContentViewProps> = (props) => {
@@ -15,17 +15,17 @@ export const ContentView: FC<ContentViewProps> = (props) => {
         'chart') as ListType
     const [type, setType] = useState(currentType)
 
-    const selectCoverHanlder = () => {
+    const selectCoverHandler = () => {
         setViewType('cover')
         setType('cover')
         localStorage.setItem('animeType', 'cover')
     }
-    const selectChartHanlder = () => {
+    const selectChartHandler = () => {
         setViewType('chart')
         setType('chart')
         localStorage.setItem('animeType', 'chart')
     }
-    const selectTableHanlder = () => {
+    const selectTableHandler = () => {
         setViewType('table')
         setType('table')
         localStorage.setItem('animeType', 'table')
@@ -39,7 +39,7 @@ export const ContentView: FC<ContentViewProps> = (props) => {
                     type === 'cover' && 'text-white'
                 )}
                 variant="transparent"
-                onClick={selectCoverHanlder}
+                onClick={selectCoverHandler}
             >
                 <Grid3X3 />
             </Button>
@@ -49,7 +49,7 @@ export const ContentView: FC<ContentViewProps> = (props) => {
                     type === 'chart' && 'text-white'
                 )}
                 variant="transparent"
-                onClick={selectChartHanlder}
+                onClick={selectChartHandler}
             >
                 <Grid2X2 />
             </Button>
@@ -59,7 +59,7 @@ export const ContentView: FC<ContentViewProps> = (props) => {
                     type === 'table' && 'text-white'
                 )}
                 variant="transparent"
-                onClick={selectTableHanlder}
+                onClick={selectTableHandler}
             >
                 <TableProperties />
             </Button>

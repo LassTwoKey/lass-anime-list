@@ -20,7 +20,7 @@ export const NonPersonalDetails: FC<NonPersonalDetails> = (props) => {
                 <h1 className="mb-12 lg:mb-16 text-lg lg:text-2xl font-medium text-white">
                     {name}
                 </h1>
-                <div>{list?.length && <SimpleContentList list={list} />}</div>
+                <div>{!!list?.length && <SimpleContentList list={list} />}</div>
             </div>
         </div>
     )

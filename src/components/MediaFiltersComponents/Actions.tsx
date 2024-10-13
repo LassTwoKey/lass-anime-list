@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { ContentView } from './ContentView'
 import { Filter } from './Filter'
 import { SORT_BY_LIST } from '@/constants/filters'
@@ -6,8 +6,8 @@ import { NameFilter, AllFilters, FilterValue, ListType } from '@/types'
 
 interface ActionsProps {
     filters: AllFilters
-    setType: React.Dispatch<React.SetStateAction<ListType>>
-    setFilters: React.Dispatch<React.SetStateAction<AllFilters>>
+    setType: Dispatch<SetStateAction<ListType>>
+    setFilters: Dispatch<SetStateAction<AllFilters>>
 }
 
 export const Actions: FC<ActionsProps> = (props) => {

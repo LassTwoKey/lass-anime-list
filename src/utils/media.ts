@@ -1,5 +1,5 @@
 import { CharactersEdge } from '@/types'
-import { FORMAT_LIST, MANGA_FORMAT_LIST } from "@/constants/filters.ts";
+import { FORMAT_LIST, MANGA_FORMAT_LIST } from '@/constants/filters.ts'
 
 export const getCharactersName = (characters: { edges: CharactersEdge[] }) => {
     return characters.edges.map((character) => ({
@@ -53,14 +53,14 @@ export const getCurrentSeason = () => {
 }
 
 export const calculateRating = (score: number) => {
-    if (typeof score === 'number') {
-        return (score / 10).toFixed(1)
-    }
-
-    return null
+    return (score / 10).toFixed(1)
 }
 
-export const getFormatName = (id:string, isAnime: boolean) => {
-    if (isAnime) return FORMAT_LIST.find(item => item.id === id)?.name
-    return MANGA_FORMAT_LIST.find(item => item.id === id)?.name
+export const getFormat = (id: string, isAnime: boolean) => {
+    if (isAnime) return FORMAT_LIST.find((item) => item.id === id)
+    return MANGA_FORMAT_LIST.find((item) => item.id === id)
+}
+export const getFormatName = (id: string, isAnime: boolean) => {
+    if (isAnime) return FORMAT_LIST.find((item) => item.id === id)?.name
+    return MANGA_FORMAT_LIST.find((item) => item.id === id)?.name
 }

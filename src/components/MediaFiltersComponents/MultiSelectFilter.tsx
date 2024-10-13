@@ -55,9 +55,9 @@ export const MultiSelectFilter: FC<MultiSelectFilterProps> = (props) => {
     }
 
     const selectHandler = (item: Filter) => {
-        const isFinded = !!selected.find((x) => x.id === item.id)
+        const isFound = !!selected.find((x) => x.id === item.id)
 
-        if (!isFinded) {
+        if (!isFound) {
             let newList: Filter[] = []
             setSelected((prev) => {
                 newList = [...prev, item]

@@ -11,39 +11,11 @@ import { Input } from '@/components/ui/input'
 import Icon from '@mdi/react'
 import { mdiMagnify } from '@mdi/js'
 import { SearchList } from '@/components/SearchList'
-import { gql, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { debounce } from '@/utils'
 import { useEffect, useState } from 'react'
 import { ErrorBlock } from './ErrorBlock'
-
-const GET_MEDIA_LIST = gql`
-    query CurrentSeasonList(
-        $page: Int
-        $perPage: Int
-        $sort: [MediaSort]
-        $type: MediaType
-        $search: String
-    ) {
-        Page(page: $page, perPage: $perPage) {
-            media(sort: $sort, type: $type, search: $search) {
-                id
-                title {
-                    romaji
-                    native
-                }
-                coverImage {
-                    large
-                }
-                meanScore
-                type
-                format
-                startDate {
-                    year
-                }
-            }
-        }
-    }
-`
+import { GET_MEDIA_LIST } from '@/api/search.ts'
 
 export const Header = () => {
     const [
@@ -94,7 +66,7 @@ export const Header = () => {
     const performSearch = async (word: string) => {
         if (!word) return
 
-        getAnimeData({
+        await getAnimeData({
             variables: {
                 page: 1,
                 perPage: 10,
@@ -103,7 +75,7 @@ export const Header = () => {
                 search: word,
             },
         })
-        getMangaData({
+        await getMangaData({
             variables: {
                 page: 1,
                 perPage: 10,
@@ -182,12 +154,12 @@ export const Header = () => {
                                     <span className="loader-1"></span>
                                 </div>
                             )}
-                            {!!isError && (
+                            {isError && (
                                 <div className="min-h-36 py-4 flex justify-center items-center text-red-500">
                                     <ErrorBlock />
                                 </div>
                             )}
-                            {!isLoading && !isError && (
+                            {!isLoading && !isError && !!animeList.length && (
                                 <SearchList
                                     title="Anime"
                                     isLoading={isLoading}
@@ -196,7 +168,7 @@ export const Header = () => {
                                     closeHandler={closeHandler}
                                 />
                             )}
-                            {!isLoading && !isError && (
+                            {!isLoading && !isError && !!mangaList.length && (
                                 <SearchList
                                     title="Manga"
                                     isLoading={isLoading}

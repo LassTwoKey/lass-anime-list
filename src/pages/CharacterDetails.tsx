@@ -1,32 +1,9 @@
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import { PageWrapper } from '@/ui/PageWrapper'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { PersonalDetails } from '@/components/PersonalDetails/PersonalDetails'
-
-const GET_CHARACTER = gql`
-    query GetCharacter($id: Int) {
-        Character(id: $id) {
-            id
-            name {
-                native
-                userPreferred
-            }
-            image {
-                large
-                medium
-            }
-            description(asHtml: true)
-            gender
-            age
-            dateOfBirth {
-                year
-                month
-                day
-            }
-        }
-    }
-`
+import { GET_CHARACTER } from '@/api/characterInfo.ts'
 
 export const CharacterDetails = () => {
     const { characterId } = useParams()

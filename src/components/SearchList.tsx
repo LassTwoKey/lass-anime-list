@@ -2,7 +2,7 @@ import { SearchAnimeDetails } from '@/types'
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import {getFormatName} from "@/utils/media.ts";
+import { getFormatName } from '@/utils/media.ts'
 
 interface SearchListProps {
     title: string
@@ -61,7 +61,12 @@ export const SearchList: FC<SearchListProps> = (props) => {
                                 </h3>
                             </Link>
                             <span className="flex gap-2 text-white">
-                                <p>{getFormatName(item.format, item.type === 'ANIME')}</p>
+                                <p>
+                                    {getFormatName(
+                                        item.format,
+                                        item.type === 'ANIME'
+                                    )}
+                                </p>
                                 <span>/</span>
                                 {item.startDate.year}
                             </span>

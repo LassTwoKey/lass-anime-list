@@ -1,13 +1,13 @@
-import { FC } from 'react'
-
+import { FC, ReactElement, ReactNode } from 'react'
 import { Header } from './Header'
 
 interface PageWrapperProps {
-    children: React.ReactNode | React.ReactElement
+    children: ReactNode | ReactElement
 }
 
 export const PageWrapper: FC<PageWrapperProps> = (props) => {
     const { children } = props
+
     return (
         <>
             <Header />

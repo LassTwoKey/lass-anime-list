@@ -1,66 +1,9 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-
 import { PageWrapper } from '@/ui/PageWrapper'
 import { MediaDetails } from '@/components/MediaDetails/MediaDetails'
 import { ErrorBlock } from '@/ui/ErrorBlock'
-
-const GET_ANIME = gql`
-    query GetAnime($id: Int) {
-        Media(id: $id, type: ANIME) {
-            id
-            title {
-                romaji
-                native
-            }
-            coverImage {
-                large
-            }
-            bannerImage
-            meanScore
-            popularity
-            favourites
-            type
-            genres
-            format
-            description
-            episodes
-            duration
-            status
-            source
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
-            season
-            seasonYear
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                        id
-                    }
-                }
-            }
-            characters {
-                edges {
-                    node {
-                        id
-                        name {
-                            userPreferred
-                        }
-                    }
-                }
-            }
-        }
-    }
-`
+import { GET_ANIME } from '@/api/animeInfo'
 
 export const AnimeDetails = () => {
     const { mediaId } = useParams()

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const GET_MEDIA_LIST = gql`
-    query CurrentSeasonList(
+    query GetMediaList(
         $page: Int
         $perPage: Int
         $type: MediaType
@@ -19,6 +19,7 @@ export const GET_MEDIA_LIST = gql`
         $licensedBy: [Int]
         $countryOfOrigin: CountryCode
         $source: MediaSource
+        $seasonYear: Int
     ) {
         Page(page: $page, perPage: $perPage) {
             media(
@@ -37,6 +38,7 @@ export const GET_MEDIA_LIST = gql`
                 licensedById_in: $licensedBy
                 countryOfOrigin: $countryOfOrigin
                 source: $source
+                seasonYear: $seasonYear
             ) {
                 id
                 title {

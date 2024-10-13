@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { ListFilter } from 'lucide-react'
-import { Title } from '@/components/MediaComponents/Title'
-import { Actions } from '@/components/MediaComponents/Actions'
-import { SideFilters } from '@/components/MediaComponents/SideFilters'
-import { MediaBlock } from '@/components/MediaComponents/MediaBlock'
+import { Title } from '@/components/MediaFiltersComponents/Title'
+import { Actions } from '@/components/MediaFiltersComponents/Actions'
+import { SideFilters } from '@/components/MediaFiltersComponents/SideFilters'
+import { MediaBlock } from '@/components/MediaFiltersComponents/MediaBlock'
 import { ListType } from '@/types'
 import useUpdateMediaFilterParams from '@/hooks/useUpdateMediaFilterParams'
 import useMediaFilters from '@/hooks/useMediaFilters'
@@ -68,7 +68,12 @@ export const MangaContent = () => {
                         </DrawerContent>
                     </Drawer>
                 </div>
-                <MediaBlock className="flex-1" isAnime={false} type={type} filters={filters} />
+                <MediaBlock
+                    className="flex-1"
+                    isAnime={false}
+                    type={type}
+                    filters={filters}
+                />
             </div>
         </div>
     )

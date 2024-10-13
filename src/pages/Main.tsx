@@ -1,64 +1,10 @@
-import { gql, useQuery } from '@apollo/client'
-
+import { useQuery } from '@apollo/client'
 import { PageWrapper } from '@/ui/PageWrapper'
 import { CurrentSeasonList } from '@/components/CurrentSeasonList'
 import { ComplexContentList } from '@/components/ComplexContentList/ComplexContentList'
 import { capitalizeFirstLetter, getCurrentSeason } from '@/utils'
 import { ErrorBlock } from '@/ui/ErrorBlock'
-
-const GET_CURRENT_SEASON_LIST = gql`
-    query CurrentSeasonList($page: Int, $perPage: Int, $seasonYear: Int) {
-        Page(page: $page, perPage: $perPage) {
-            media(
-                seasonYear: $seasonYear
-                type: ANIME
-                status: RELEASING
-                isAdult: false
-            ) {
-                id
-                title {
-                    romaji
-                    native
-                }
-                coverImage {
-                    large
-                }
-                meanScore
-            }
-        }
-    }
-`
-
-const GET_MEDIA_LIST = gql`
-    query CurrentSeasonList(
-        $page: Int
-        $perPage: Int
-        $sort: [MediaSort]
-        $type: MediaType
-    ) {
-        Page(page: $page, perPage: $perPage) {
-            media(sort: $sort, type: $type, status: RELEASING) {
-                id
-                title {
-                    romaji
-                    native
-                }
-                coverImage {
-                    large
-                }
-                bannerImage
-                meanScore
-                type
-                genres
-                format
-                description
-                startDate {
-                    year
-                }
-            }
-        }
-    }
-`
+import { GET_MEDIA_LIST } from '@/api/filters'
 
 export const Main = () => {
     const currentSeason = getCurrentSeason()
@@ -67,11 +13,13 @@ export const Main = () => {
         loading: currentListLoading,
         error: currentListError,
         data: currentListData,
-    } = useQuery(GET_CURRENT_SEASON_LIST, {
+    } = useQuery(GET_MEDIA_LIST, {
         variables: {
             page: 1,
             perPage: 10,
             seasonYear: currentSeason.year,
+            type: 'ANIME',
+            status: 'RELEASING',
         },
     })
 

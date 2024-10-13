@@ -165,7 +165,7 @@ export const MANGA_FORMAT_LIST = [
     },
     {
         id: 'ONE_SHOT',
-        name: 'One Shot Manga',
+        name: 'One Shot',
     },
 ]
 

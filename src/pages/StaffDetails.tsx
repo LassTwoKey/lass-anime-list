@@ -1,60 +1,9 @@
 import { ErrorBlock } from '@/ui/ErrorBlock'
 import { PageWrapper } from '@/ui/PageWrapper'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { PersonalDetails } from '@/components/PersonalDetails/PersonalDetails'
-
-const GET_STAFF = gql`
-    query GetStaff($id: Int) {
-        Staff(id: $id) {
-            id
-            name {
-                native
-                userPreferred
-            }
-            image {
-                large
-                medium
-            }
-            description(asHtml: true)
-            gender
-            age
-            dateOfBirth {
-                year
-                month
-                day
-            }
-
-            dateOfDeath {
-                year
-                month
-                day
-            }
-            primaryOccupations
-            yearsActive
-            homeTown
-            bloodType
-
-            staffMedia {
-                edges {
-                    staffRole
-                    node {
-                        id
-                        type
-                        title {
-                            romaji
-                            native
-                        }
-                        coverImage {
-                            large
-                        }
-                        meanScore
-                    }
-                }
-            }
-        }
-    }
-`
+import { GET_STAFF } from '@/api/staffInfo.ts'
 
 export const StaffDetails = () => {
     const { staffId } = useParams()
