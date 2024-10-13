@@ -23,8 +23,8 @@ interface TableItemsListProps {
 export const TableItemsList: FC<TableItemsListProps> = (props) => {
     const { list, fetchData } = props
 
-    const location = useLocation()
-    const isAnimePage = location.pathname === '/anime'
+    const { pathname } = useLocation()
+    const isMediaPage = pathname === '/anime' || pathname === '/manga'
 
     const getToUrl = (item: ChartItem) => {
         return item.type === 'ANIME' ? `/anime/${item.id}` : `/manga/${item.id}`
@@ -69,7 +69,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                         <p className="text-gray-400">{item.title.native}</p>
 
                         <div className="flex gap-2 text-white">
-                            {isAnimePage && (
+                            {isMediaPage && (
                                 <p className="whitespace-nowrap">
                                     {getFormatName(
                                         item.format,
@@ -77,7 +77,7 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                                     )}
                                 </p>
                             )}
-                            {!isAnimePage &&
+                            {!isMediaPage &&
                                 getFilterLink(
                                     getFormatName(
                                         item.format,
@@ -93,8 +93,8 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                                     }
                                 )}
                             <span>/</span>
-                            {isAnimePage && item.startDate.year}
-                            {!isAnimePage &&
+                            {isMediaPage && item.startDate.year}
+                            {!isMediaPage &&
                                 getFilterLink(
                                     item.startDate.year.toString(),
                                     'year',
@@ -104,11 +104,11 @@ export const TableItemsList: FC<TableItemsListProps> = (props) => {
                                     }
                                 )}
                             <span>/</span>
-                            {isAnimePage && (
+                            {isMediaPage && (
                                 <p>{getStringSeparatedByCommas(item.genres)}</p>
                             )}
                             <div>
-                                {!isAnimePage &&
+                                {!isMediaPage &&
                                     getFilterLink('', 'genres', {
                                         genres: item.genres,
                                         mediaType: item.type.toLowerCase(),

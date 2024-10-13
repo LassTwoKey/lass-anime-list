@@ -10,9 +10,10 @@ const HoverCardTrigger = HoverCardPrimitive.Trigger
 const HoverArrow = React.forwardRef<
     React.ElementRef<typeof HoverCardPrimitive.Arrow>,
     React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Arrow>
->(({ className, ...props }) => {
+>(({ className, ...props }, ref) => {
     return (
         <HoverCardPrimitive.Arrow
+            ref={ref}
             className={cn(
                 'fill-neutral-700 stroke-neutral-700 stroke-[0.5]',
                 className

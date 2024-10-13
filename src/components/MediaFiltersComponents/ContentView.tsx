@@ -1,4 +1,5 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { ListType } from '@/types'
@@ -10,25 +11,25 @@ interface ContentViewProps {
 
 export const ContentView: FC<ContentViewProps> = (props) => {
     const { setViewType } = props
-
-    const currentType = (localStorage.getItem('animeType') ??
-        'chart') as ListType
+    const { pathname } = useLocation()
+    const mediaType = pathname === '/manga' ? 'mangaType' : 'animeType'
+    const currentType = (localStorage.getItem(mediaType) ?? 'chart') as ListType
     const [type, setType] = useState(currentType)
 
     const selectCoverHandler = () => {
         setViewType('cover')
         setType('cover')
-        localStorage.setItem('animeType', 'cover')
+        localStorage.setItem(mediaType, 'cover')
     }
     const selectChartHandler = () => {
         setViewType('chart')
         setType('chart')
-        localStorage.setItem('animeType', 'chart')
+        localStorage.setItem(mediaType, 'chart')
     }
     const selectTableHandler = () => {
         setViewType('table')
         setType('table')
-        localStorage.setItem('animeType', 'table')
+        localStorage.setItem(mediaType, 'table')
     }
 
     return (
