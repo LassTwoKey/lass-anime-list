@@ -11,6 +11,7 @@ import {
 
 import './assets/index.css'
 import { router } from './router/router.tsx'
+import { registerServiceWorker } from './registerServiceWorker'
 
 const httpLink = createHttpLink({
     uri: 'https://graphql.anilist.co',
@@ -42,3 +43,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </ApolloProvider>
     </React.StrictMode>
 )
+
+registerServiceWorker()
