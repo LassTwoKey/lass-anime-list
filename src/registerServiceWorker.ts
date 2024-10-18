@@ -1,12 +1,10 @@
 export function registerServiceWorker() {
-    console.log(import.meta.env)
-
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker
                 .register(
                     import.meta.env.PROD
-                        ? `${import.meta.env.BASE_URL}/service-worker.js`
+                        ? `${import.meta.env.VITE_PROD_CORE_URL}/service-worker.js`
                         : '/service-worker.js'
                 )
                 .then((registration) => {
